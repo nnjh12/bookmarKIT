@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 import TextareaPage from "./components/TextareaPage"
+import TagButton from "./components/TagButton"
 
 class App extends Component {
   render() {
@@ -10,6 +10,7 @@ class App extends Component {
       <div className="container">
         <TextareaPage id="contentInput" rows="5">Memo</TextareaPage>
         <TextareaPage id="tagInput" rows="2">Tags</TextareaPage>
+        <TagButton></TagButton>
 
       </div>
     );
