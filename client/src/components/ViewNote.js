@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import API from "../utils/api";
 
-import Button from "../components/Button"
+import Button from "./Button"
 
-class TagButton extends Component {
+class ViewNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,10 +12,10 @@ class TagButton extends Component {
     }
 
     componentDidMount() {
-        this.loadTag();
+        this.loadNote();
     }
 
-    loadTag = () => {
+    loadNote = () => {
         API.getAllNote()
             .then(res =>
                 this.setState({ note: res.data }, () => {
@@ -35,12 +35,17 @@ class TagButton extends Component {
         return (
             <>
                 {this.state.note.map((ele, index) => (
-                    <Button>{ele.note}
-                        
-                    </Button>
-                    
+                    <div className="mb-4" key={ele._id}>
+                        <h3>{ele.note}</h3>
+                        <p>{ele.date}</p>
+
+                        {ele.tag.map((tagEle, index) => (
+                            <Button key={ele._id + "-" + index}>#{tagEle}</Button>
+                        ))}
+
+                    </div>
                 ))}
-                
+
             </>
 
 
@@ -48,4 +53,4 @@ class TagButton extends Component {
     }
 }
 
-export default TagButton;
+export default ViewNote;

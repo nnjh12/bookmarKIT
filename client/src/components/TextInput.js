@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TextareaPage = (props) => {
+const TextInput = (props) => {
     return (
         <div className="form-group">
             <label htmlFor="exampleFormControlTextarea1">
@@ -8,11 +8,13 @@ const TextareaPage = (props) => {
             </label>
             <textarea
                 className="form-control"
+                name={props.name}
                 id={props.id}
                 rows={props.rows}
+                onChange={props.onChange}
             />
         </div>
     )
 }
 
-export default TextareaPage;
+export default TextInput;
