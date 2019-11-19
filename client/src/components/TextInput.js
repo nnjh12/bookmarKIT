@@ -12,6 +12,7 @@ const TextInput = (props) => {
                 id={props.id}
                 rows={props.rows}
                 onChange={props.onChange}
+                value={props.value}
             />
         </div>
     )

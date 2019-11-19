@@ -1,33 +1,13 @@
 import React, { Component } from "react";
-import Button from "./Button"
+import Button from "./Button";
+import DeleteIcon from "./DeleteIcon";
 
 class ViewNote extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         note: []
-    //     };
-    // }
-    componentDidMount() {
-        this.print()
-    }
-
-    print =() => {
-        console.log("note print component ")
-    }
-
-    componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
-        if (this.props.allNote !== prevProps.allNote) {
-          console.log("update")
-        }
-      }
-
     render() {
         return (
             <>
-
-                {/* <div className="mb-4">
+                <div className="mb-4">
+                    <DeleteIcon deleteOnClick={this.props.deleteOnClick}></DeleteIcon>
                     <h3>{this.props.note}</h3>
                     <p>{this.props.date}</p>
 
@@ -35,10 +15,10 @@ class ViewNote extends Component {
                         <Button key={index}>#{tagEle}</Button>
                     ))}
 
-                </div> */}
+                </div>
 
 
-                {this.props.allNote.map((ele, index) => (
+                {/* {this.props.allNote.map((ele, index) => (
                     <div className="mb-4" key={ele._id}>
                         <h3>{ele.note}</h3>
                         <p>{ele.date}</p>
@@ -49,7 +29,7 @@ class ViewNote extends Component {
 
                     </div>
                 ))}
-
+ */}
             </>
 
 

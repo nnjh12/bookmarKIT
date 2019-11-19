@@ -35,8 +35,14 @@ class App extends Component {
     API.saveNote(newNote)
       .then(res => {
         console.log("just saved")
-        this.setState({ allNote: [...this.state.allNote, res.data] }, () => console.log(this.state.allNote))
+        this.setState({ allNote: [res.data, ...this.state.allNote] }, () => console.log(this.state.allNote))
       })
+      .catch(err => console.log(err));
+  };
+
+  deleteNote = (id) => {
+    API.deleteNote(id)
+      .then(this.loadNote)
       .catch(err => console.log(err));
   };
 
@@ -44,12 +50,12 @@ class App extends Component {
     return (
       <div className="container">
         <InputNote onClick={this.postNote}></InputNote>
-        <ViewNote allNote={this.state.allNote}></ViewNote>
-        
-        {/* {this.state.allNote.map((ele, index) => (
-          <ViewNote key={ele._id} note={ele.note} date={ele.date} tag={ele.tag}></ViewNote>
+        {/* <ViewNote allNote={this.state.allNote}></ViewNote> */}
+
+        {this.state.allNote.map((ele, index) => (
+          <ViewNote key={ele._id} note={ele.note} date={ele.date} tag={ele.tag} deleteOnClick={() => this.deleteNote(ele._id)}></ViewNote>
         ))}
- */}
+
 
       </div>
     );

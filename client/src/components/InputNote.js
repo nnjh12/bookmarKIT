@@ -6,38 +6,36 @@ class InputNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            note: "",
-            tag: []
+            newNote: "",
+            newTag: []
         };
     }
 
     handleInputChange = event => {
         const { name, value } = event.target;
-        if (name === "tag") {
-            const tagArray = value.split("#").map(item => item.trim());
-            const filtered = tagArray.filter(item => item);
-            this.setState({
-                [name]: filtered
-            });
-        } else {
-            this.setState({
-                [name]: value
-            });
-        }
+        this.setState({
+            [name]: value
+        });
     };
 
-    //   deleteBook = (id) => {
-    //     API.deleteBook(id)
-    //       .then(this.loadBook)
-    //       .catch(err => console.log(err));
-    //   };
+    onSubmit = () => {
+        const tagArray = this.state.newTag.split("#").map(item => item.trim());
+        const filtered = tagArray.filter(item => item);
+
+        const newNote = {
+            note: this.state.newNote,
+            tag: filtered
+        }
+        this.props.onClick(newNote)
+        this.setState({ newNote: "", newTag: [] });
+    }
 
     render() {
         return (
             <div>
-                <TextInput name="note" row="5" onChange={this.handleInputChange}>Note</TextInput>
-                <TextInput name="tag" row="2" onChange={this.handleInputChange}>Tag</TextInput>
-                <button onClick={() => this.props.onClick(this.state)}>save</button>
+                <TextInput name="newNote" row="5" onChange={this.handleInputChange} value={this.state.newNote}>Note</TextInput>
+                <TextInput name="newTag" row="2" onChange={this.handleInputChange} value={this.state.newTag}>Tag</TextInput>
+                <button onClick={this.onSubmit}>save</button>
             </div>
         );
     }
