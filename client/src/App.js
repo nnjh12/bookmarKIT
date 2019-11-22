@@ -5,6 +5,7 @@ import API from "./utils/api";
 
 import InputNote from "./components/InputNote";
 import ViewNote from "./components/ViewNote";
+import TagButton from "./components/TagButton";
 
 class App extends Component {
 
@@ -46,6 +47,14 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
+  deleteTag = (id, tag) => {
+    console.log(id)
+    console.log(tag)
+    API.deleteTag(id, tag)
+      .then(this.loadNote)
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <div className="container">
@@ -53,10 +62,21 @@ class App extends Component {
         {/* <ViewNote allNote={this.state.allNote}></ViewNote> */}
 
         {this.state.allNote.map((ele, index) => (
-          <ViewNote key={ele._id} note={ele.note} date={ele.date} tag={ele.tag} deleteOnClick={() => this.deleteNote(ele._id)}></ViewNote>
+          <div className="viewNoteContainer" key={index}>
+            <ViewNote
+              key={ele._id}
+              note={ele.note}
+              date={ele.date}
+              deleteOnClick={() => this.deleteNote(ele._id)}
+            ></ViewNote>
+
+            {ele.tag.map((tagEle, index) => (
+              <TagButton
+                key={index}
+                deleteTag={() => this.deleteTag(ele._id, tagEle)}>
+                {tagEle}</TagButton>))}
+          </div>
         ))}
-
-
       </div>
     );
   }
