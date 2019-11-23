@@ -6,6 +6,7 @@ import API from "./utils/api";
 import InputNote from "./components/InputNote";
 import ViewNote from "./components/ViewNote";
 import TagButton from "./components/TagButton";
+import PlusIcon from "./components/PlusIcon";
 
 class App extends Component {
 
@@ -55,6 +56,16 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+  addTag = (id) => {
+    console.log("App.js addTag")
+    API.addTag(id, { tag: ["hello", "test"] })
+      .then(response => {
+        console.log(response.data);
+      })
+      // .then(this.loadNote)
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <div className="container">
@@ -73,8 +84,10 @@ class App extends Component {
             {ele.tag.map((tagEle, index) => (
               <TagButton
                 key={index}
-                deleteTag={() => this.deleteTag(ele._id, tagEle)}>
+                deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
                 {tagEle}</TagButton>))}
+
+            <PlusIcon addTag={() => this.addTag(ele._id)}></PlusIcon>
           </div>
         ))}
       </div>

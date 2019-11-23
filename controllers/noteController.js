@@ -39,5 +39,22 @@ module.exports = {
       .update({ _id: req.params.id }, { $pullAll: { tag: [req.params.tag] } })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  addTag: function (req, res) {
+    console.log("add tag back end")
+    console.log(req.body)
+    db.Note
+      .updateOne(
+        { _id: req.params.id },
+        {
+          $push: {
+            tag: {
+              $each: req.body,
+            }
+          }
+        }
+      )
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
   }
 };

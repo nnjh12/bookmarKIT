@@ -11,7 +11,7 @@ router.route("/:id")
   .get(noteController.findById)
   .put(noteController.update)
   .delete(noteController.remove);
-router.route("/:id/:tag")
-  .put(noteController.removeTag);
+// router.route("/:id/:tag")
+//   .put(noteController.removeTag);
 
 module.exports = router;

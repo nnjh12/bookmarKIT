@@ -7,7 +7,7 @@ class InputNote extends Component {
         super(props);
         this.state = {
             newNote: "",
-            newTag: []
+            newTag: ""
         };
     }
 
@@ -27,7 +27,7 @@ class InputNote extends Component {
             tag: filtered
         }
         this.props.onClick(newNote)
-        this.setState({ newNote: "", newTag: [] });
+        this.setState({ newNote: "", newTag: "" });
     }
 
     render() {

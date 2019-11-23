@@ -1,4 +1,5 @@
 import axios from "axios";
+// import { func } from "prop-types";
 
 export default {
   // Gets all note
@@ -17,7 +18,16 @@ export default {
   saveNote: function (bookData) {
     return axios.post("/api/note", bookData);
   },
+
+  // Delete one tag from note
   deleteTag: function (id, tag) {
-    return axios.put("/api/note/" + id + "/" + tag)
+    return axios.put("/api/tag/" + id + "/" + tag)
+  },
+  // Add tags to note
+  addTag: function (id, data) {
+    console.log("api addTag")
+    console.log(id)
+    console.log(data.tag)
+    return axios.put("/api/tag/" + id, data.tag)
   }
 };
