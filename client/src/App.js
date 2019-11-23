@@ -58,7 +58,7 @@ class App extends Component {
 
   addTag = (id) => {
     console.log("App.js addTag")
-    API.addTag(id, { tag: ["hello", "test"] })
+    API.addTag(id, ["hello","array"])
       .then(response => {
         console.log(response.data);
       })
@@ -87,7 +87,7 @@ class App extends Component {
                 deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
                 {tagEle}</TagButton>))}
 
-            <PlusIcon addTag={() => this.addTag(ele._id)}></PlusIcon>
+            <PlusIcon passingId={ele._id} callback={this.loadNote}></PlusIcon>
           </div>
         ))}
       </div>

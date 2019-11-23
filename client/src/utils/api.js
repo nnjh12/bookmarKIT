@@ -27,7 +27,7 @@ export default {
   addTag: function (id, data) {
     console.log("api addTag")
     console.log(id)
-    console.log(data.tag)
-    return axios.put("/api/tag/" + id, data.tag)
+    console.log(data)
+    return axios.put("/api/tag/" + id, data)
   }
 };
