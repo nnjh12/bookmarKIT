@@ -56,11 +56,12 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  addTag = (id) => {
+  addTag = (id, newTag) => {
     console.log("App.js addTag")
-    API.addTag(id, ["hello","array"])
+    API.addTag(id, newTag)
       .then(response => {
         console.log(response.data);
+        this.loadNote()
       })
       // .then(this.loadNote)
       .catch(err => console.log(err));
@@ -70,7 +71,6 @@ class App extends Component {
     return (
       <div className="container">
         <InputNote onClick={this.postNote}></InputNote>
-        {/* <ViewNote allNote={this.state.allNote}></ViewNote> */}
 
         {this.state.allNote.map((ele, index) => (
           <div className="viewNoteContainer" key={index}>
@@ -81,15 +81,17 @@ class App extends Component {
               deleteOnClick={() => this.deleteNote(ele._id)}
             ></ViewNote>
 
-            {ele.tag.map((tagEle, index) => (
+            {ele.tag.sort().map((tagEle, index) => (
               <TagButton
                 key={index}
                 deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
                 {tagEle}</TagButton>))}
 
-            <PlusIcon passingId={ele._id} callback={this.loadNote}></PlusIcon>
+            <PlusIcon callBackId={ele._id} callback={this.addTag}></PlusIcon>
           </div>
         ))}
+
+        
       </div>
     );
   }

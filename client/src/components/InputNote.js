@@ -7,7 +7,11 @@ class InputNote extends Component {
         super(props);
         this.state = {
             newNote: "",
-            newTag: ""
+            newTag: "",
+            placeholder: {
+                note: "Write your note here.",
+                tag: "#my tag #example #hello"
+            }
         };
     }
 
@@ -33,9 +37,9 @@ class InputNote extends Component {
     render() {
         return (
             <div>
-                <TextInput name="newNote" row="5" onChange={this.handleInputChange} value={this.state.newNote}>Note</TextInput>
-                <TextInput name="newTag" row="2" onChange={this.handleInputChange} value={this.state.newTag}>Tag</TextInput>
-                <button onClick={this.onSubmit}>save</button>
+                <TextInput name="newNote" row="5" onChange={this.handleInputChange} value={this.state.newNote} placeholder={this.state.placeholder.note}>Note</TextInput>
+                <TextInput name="newTag" row="2" onChange={this.handleInputChange} value={this.state.newTag} placeholder={this.state.placeholder.tag}>Tag</TextInput>
+                <button disabled={this.state.newNote ? false : true} onClick={this.onSubmit}>save</button>
             </div>
         );
     }
