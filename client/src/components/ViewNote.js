@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import DeleteIcon from "./DeleteIcon";
+var moment = require("moment");
+
 
 class ViewNote extends Component {
     render() {
@@ -7,7 +9,7 @@ class ViewNote extends Component {
             <div className="noteContainer mb-4">
                 <DeleteIcon deleteOnClick={this.props.deleteOnClick}></DeleteIcon>
                 <h3>{this.props.note}</h3>
-                <p>{this.props.date}</p>
+                <p>{moment(this.props.date).format("YYYY-MM-DD h:mm a")}</p>
             </div>
         );
     }
