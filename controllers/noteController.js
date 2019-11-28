@@ -34,6 +34,14 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  filter: function (req, res) {
+    console.log(req.query)
+    db.Note
+      .find(req.query)
+      .sort({ date: -1 })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
   removeTag: function (req, res) {
     db.Note
       .update({ _id: req.params.id }, { $pullAll: { tag: [req.params.tag] } })

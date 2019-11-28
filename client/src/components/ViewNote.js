@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import DeleteIcon from "./DeleteIcon";
 var moment = require("moment");
 
-
 class ViewNote extends Component {
     render() {
         return (

@@ -4,6 +4,8 @@ import API from "./utils/api";
 
 
 import InputNote from "./components/InputNote";
+import SearchBar from "./components/SearchBar";
+
 import ViewNote from "./components/ViewNote";
 import TagButton from "./components/TagButton";
 import PlusIcon from "./components/PlusIcon";
@@ -14,7 +16,8 @@ class App extends Component {
     super(props);
     this.state = {
       allNote: [],
-      filteredNote: []
+      filteredNote: [],
+      search: ""
     };
   }
 
@@ -25,8 +28,8 @@ class App extends Component {
   loadNote = () => {
     API.getAllNote()
       .then(res =>
-        this.setState({ allNote: res.data }, () => {
-          console.log(this.state.allNote)
+        this.setState({ allNote: res.data, filteredNote: res.data }, () => {
+          console.log(this.state)
         })
       )
       .catch(err => console.log(err));
@@ -38,15 +41,24 @@ class App extends Component {
       .then(res => {
         console.log("just saved")
         this.setState({ allNote: [res.data, ...this.state.allNote] }, () => console.log(this.state.allNote))
+        this.filterNote(this.state.search)
       })
       .catch(err => console.log(err));
   };
 
   deleteNote = (id) => {
+    console.log("Delete")
     API.deleteNote(id)
       .then(this.loadNote)
       .catch(err => console.log(err));
   };
+
+  filterNote = (search) => {
+    this.setState({ search: search }, () => {
+      const filteredNote = this.state.allNote.filter(ele => ele.note.indexOf(this.state.search) > -1)
+      this.setState({ filteredNote: filteredNote }, console.log(this.state.filteredNote))
+    })
+  }
 
   deleteTag = (id, tag) => {
     console.log(id)
@@ -71,8 +83,11 @@ class App extends Component {
     return (
       <div className="container">
         <InputNote onClick={this.postNote}></InputNote>
+        <SearchBar filterNote={this.filterNote}></SearchBar>
 
-        {this.state.allNote.map((ele, index) => (
+
+
+        {this.state.filteredNote.map((ele, index) => (
           <div className="viewNoteContainer" key={index}>
             <ViewNote
               key={ele._id}
@@ -91,7 +106,7 @@ class App extends Component {
           </div>
         ))}
 
-        
+
       </div>
     );
   }
