@@ -54,9 +54,20 @@ class App extends Component {
   };
 
   filterNote = (search) => {
-    this.setState({ search: search }, () => {
-      const filteredNote = this.state.allNote.filter(ele => ele.note.indexOf(this.state.search) > -1)
-      this.setState({ filteredNote: filteredNote }, console.log(this.state.filteredNote))
+    const testNote = (str, key) => {
+      return str.toLowerCase().indexOf(key) > -1
+    }
+    const testTag = (arr, key) => {
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].toLowerCase().indexOf(key) > -1) {
+          return true;
+        }
+      }
+    }
+
+    this.setState({ search: search.toLowerCase() }, () => {
+      const filteredNote = this.state.allNote.filter(ele => testNote(ele.note, this.state.search) || testTag(ele.tag, this.state.search))
+      this.setState({ filteredNote: filteredNote })
     })
   }
 
