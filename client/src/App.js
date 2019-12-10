@@ -74,12 +74,12 @@ class App extends Component {
   getHighlightedText(text, highlight) {
     // Split on highlight term and include term into parts, ignore case
     let parts = text.split(new RegExp(`(${highlight})`, 'gi'));
-    return <span> { parts.map((part, i) => 
-        <span key={i} style={part.toLowerCase() === highlight.toLowerCase() ? { fontWeight: 'bold' } : {} }>
-            { part }
-        </span>)
+    return <span> {parts.map((part, i) =>
+      <span key={i} style={part.toLowerCase() === highlight.toLowerCase() ? { fontWeight: 'bold' } : {}}>
+        {part}
+      </span>)
     } </span>;
-}
+  }
 
   deleteTag = (id, tag) => {
     console.log(id)
@@ -112,7 +112,7 @@ class App extends Component {
           <div className="viewNoteContainer" key={index}>
             <ViewNote
               key={ele._id}
-              note={ele.note}
+              text={ele.note}
               highlight={this.state.search}
               date={ele.date}
               deleteOnClick={() => this.deleteNote(ele._id)}
@@ -121,8 +121,10 @@ class App extends Component {
             {ele.tag.sort().map((tagEle, index) => (
               <TagButton
                 key={index}
+                text={tagEle}
+                highlight={this.state.search}
                 deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
-                {tagEle}</TagButton>))}
+                </TagButton>))}
 
             <PlusIcon callBackId={ele._id} callback={this.addTag}></PlusIcon>
           </div>

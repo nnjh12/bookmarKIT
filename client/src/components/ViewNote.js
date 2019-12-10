@@ -9,7 +9,7 @@ class ViewNote extends Component {
         return (
             <div className="noteContainer mb-4">
                 <DeleteIcon deleteOnClick={this.props.deleteOnClick}></DeleteIcon>
-                <h3><Highlight text={this.props.note} highlight={this.props.highlight}></Highlight></h3>
+                <h3><Highlight text={this.props.text} highlight={this.props.highlight}></Highlight></h3>
                 <p>{moment(this.props.date).format("YYYY-MM-DD h:mm a")}</p>
             </div>
         );
