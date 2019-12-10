@@ -12,10 +12,12 @@ const Highlight = ({text = '', highlight = ''}) => {
     const regex = new RegExp(`(${escapeRegExp(highlight)})`, 'gi')
     const parts = text.split(regex)
 
+    console.log()
+
     return (
       <span>
          {parts.filter(part => part).map((part, i) => (
-             regex.test(part) ? <mark key={i} style={{backgroundColor:"yellow"}}>{part}</mark> : <span key={i}>{part}</span>
+             regex.test(part) ? <mark key={i} style={{backgroundColor:"yellow", padding:"0"}}>{part}</mark> : <span key={i}>{part}</span>
          ))}
      </span>
     )
