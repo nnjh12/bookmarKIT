@@ -29,7 +29,7 @@ class PlusIcon extends Component {
 
     render() {
         return (
-            <div className="md-form input-group mb-3">
+            <div className="md-form input-group m-0">
                 <input type="text" className="form-control" placeholder={this.state.placeholder} name="newTag" onChange={this.handleInputChange} value={this.state.newTag}></input>
                 <div className="input-group-append">
                     <button className="btn btn-md btn-default m-0 px-3" type="button" id="MaterialButton-addon2" disabled={this.state.newTag ? false : true} onClick={this.onSubmit}>Add</button>

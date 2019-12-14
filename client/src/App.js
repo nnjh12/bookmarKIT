@@ -109,7 +109,7 @@ class App extends Component {
 
 
         {this.state.filteredNote.map((ele, index) => (
-          <div className="viewNoteContainer" key={index}>
+          <div className="viewNoteContainer mb-4 p-4" style={{borderRadius:"15px", backgroundColor:"#DDFFF7"}} key={index}>
             <ViewNote
               key={ele._id}
               text={ele.note}
@@ -118,13 +118,17 @@ class App extends Component {
               deleteOnClick={() => this.deleteNote(ele._id)}
             ></ViewNote>
 
-            {ele.tag.sort().map((tagEle, index) => (
-              <TagButton
-                key={index}
-                text={tagEle}
-                highlight={this.state.search}
-                deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
+            <div className="tagContainer mb-3">
+              {ele.tag.sort().map((tagEle, index) => (
+                <TagButton
+                  key={index}
+                  text={tagEle}
+                  highlight={this.state.search}
+                  deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
                 </TagButton>))}
+                <div style={{clear:'both'}}></div>
+
+            </div>
 
             <PlusIcon callBackId={ele._id} callback={this.addTag}></PlusIcon>
           </div>
