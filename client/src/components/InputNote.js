@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import TextInput from "./TextInput"
-
 class InputNote extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +20,8 @@ class InputNote extends Component {
         });
     };
 
-    onSubmit = () => {
+    onSubmit = (event) => {
+        event.preventDefault()
         const tagArray = this.state.newTag.split("#").map(item => item.trim());
         const filtered = tagArray.filter(item => item);
 
@@ -36,11 +35,35 @@ class InputNote extends Component {
 
     render() {
         return (
-            <div>
-                <TextInput name="newNote" row="5" onChange={this.handleInputChange} value={this.state.newNote} placeholder={this.state.placeholder.note}>Note</TextInput>
+            <form>
+                <label htmlFor="note">Note</label>
+                <textarea 
+                    id="note"
+                    name="newNote"
+                    rows="3"
+                    style={{width:"100%"}}
+                    onChange={this.handleInputChange}
+                    value={this.state.newNote}
+                    placeholder={this.state.placeholder.note}>
+                </textarea>
+            
+                <label htmlFor="tag">Tag</label>
+                <input
+                    type="text"
+                    id="tag"
+                    name="newTag"
+                    style={{width:"100%"}}
+                    onChange={this.handleInputChange}
+                    value={this.state.newTag}
+                    placeholder={this.state.placeholder.tag}>
+                </input>
+            
+                <input type="submit" value="Save" disabled={this.state.newNote ? false : true} onClick={this.onSubmit}></input>
+
+                {/* <TextInput name="newNote" row="5" onChange={this.handleInputChange} value={this.state.newNote} placeholder={this.state.placeholder.note}>Note</TextInput>
                 <TextInput name="newTag" row="2" onChange={this.handleInputChange} value={this.state.newTag} placeholder={this.state.placeholder.tag}>Tag</TextInput>
-                <button disabled={this.state.newNote ? false : true} onClick={this.onSubmit}>save</button>
-            </div>
+                <button disabled={this.state.newNote ? false : true} onClick={this.onSubmit}>save</button> */}
+            </form>
         );
     }
 }
