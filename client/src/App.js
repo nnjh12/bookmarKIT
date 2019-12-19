@@ -28,8 +28,9 @@ class App extends Component {
   loadNote = () => {
     API.getAllNote()
       .then(res =>
-        this.setState({ allNote: res.data, filteredNote: res.data }, () => {
+        this.setState({ allNote: res.data }, () => {
           console.log(this.state)
+          this.filterNote(this.state.search)
         })
       )
       .catch(err => console.log(err));
@@ -65,20 +66,14 @@ class App extends Component {
       }
     }
 
-    this.setState({ search: search.toLowerCase() }, () => {
-      const filteredNote = this.state.allNote.filter(ele => testNote(ele.note, this.state.search) || testTag(ele.tag, this.state.search))
+    this.setState({ search: search.toLowerCase() }, (filteredNote) => {
+      if (this.state.search.charAt(0) === "#") {
+        filteredNote = this.state.allNote.filter(ele => testTag(ele.tag, this.state.search.substr(1)))
+      } else {
+        filteredNote = this.state.allNote.filter(ele => testNote(ele.note, this.state.search) || testTag(ele.tag, this.state.search))
+      }
       this.setState({ filteredNote: filteredNote })
     })
-  }
-
-  getHighlightedText(text, highlight) {
-    // Split on highlight term and include term into parts, ignore case
-    let parts = text.split(new RegExp(`(${highlight})`, 'gi'));
-    return <span> {parts.map((part, i) =>
-      <span key={i} style={part.toLowerCase() === highlight.toLowerCase() ? { fontWeight: 'bold' } : {}}>
-        {part}
-      </span>)
-    } </span>;
   }
 
   deleteTag = (id, tag) => {
@@ -106,10 +101,8 @@ class App extends Component {
         <InputNote onClick={this.postNote}></InputNote>
         <SearchBar filterNote={this.filterNote}></SearchBar>
 
-
-
         {this.state.filteredNote.map((ele, index) => (
-          <div className="viewNoteContainer mb-4 p-4" style={{borderRadius:"15px", backgroundColor:"#DDFFF7"}} key={index}>
+          <div className="viewNoteContainer mb-4 p-4" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
             <ViewNote
               key={ele._id}
               text={ele.note}
@@ -123,10 +116,10 @@ class App extends Component {
                 <TagButton
                   key={index}
                   text={tagEle}
-                  highlight={this.state.search}
+                  highlight={this.state.search.charAt(0) === "#" ? this.state.search.substr(1) : this.state.search}
                   deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
                 </TagButton>))}
-                <div style={{clear:'both'}}></div>
+              <div style={{ clear: 'both' }}></div>
 
             </div>
 
