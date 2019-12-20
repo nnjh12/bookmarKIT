@@ -73,7 +73,7 @@ class App extends Component {
       } else {
         filteredNote = this.state.allNote.filter(ele => testNote(ele.note, this.state.search) || testTag(ele.tag, this.state.search))
       }
-      this.setState({ filteredNote: filteredNote })
+      this.setState({ filteredNote: filteredNote }, () => { console.log(this.state.filteredNote) })
     })
   }
 
@@ -110,19 +110,19 @@ class App extends Component {
     let sortedNote;
     if (sortField === "alphabet") {
       if (ascending) {
-        sortedNote = this.state.filteredNote.sort(sortAlphabet)
+        sortedNote = this.state.allNote.sort(sortAlphabet)
       } else {
-        sortedNote = this.state.filteredNote.sort(sortAlphabet).reverse()
+        sortedNote = this.state.allNote.sort(sortAlphabet).reverse()
       }
     } else {
       if (ascending) {
-        sortedNote = this.state.filteredNote.sort(sortDate)
+        sortedNote = this.state.allNote.sort(sortDate)
       } else {
-        sortedNote = this.state.filteredNote.sort(sortDate).reverse()
+        sortedNote = this.state.allNote.sort(sortDate).reverse()
       }
     }
 
-    this.setState({ filteredNote: sortedNote })
+    this.setState({ allNote: sortedNote }, () => { this.filterNote(this.state.search) })
 
   }
 
