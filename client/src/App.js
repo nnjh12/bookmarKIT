@@ -9,6 +9,7 @@ import SearchBar from "./components/SearchBar";
 import ViewNote from "./components/ViewNote";
 import TagButton from "./components/TagButton";
 import PlusIcon from "./components/PlusIcon";
+import SortButton from "./components/SortButton";
 
 class App extends Component {
 
@@ -76,6 +77,55 @@ class App extends Component {
     })
   }
 
+  sortNote = (sortField, ascending) => {
+    console.log("Sort Notes");
+
+    const sortAlphabet = (a, b) => {
+      var noteA = a.note.toLowerCase(); // ignore upper and lowercase
+      var noteB = b.note.toLowerCase(); // ignore upper and lowercase
+      if (noteA < noteB) {
+        return -1;
+      }
+      if (noteA > noteB) {
+        return 1;
+      }
+      // names must be equal
+      return 0;
+    }
+
+    const sortDate = (a, b) => {
+      var dateA = a.date; // ignore upper and lowercase
+      var dateB = b.date; // ignore upper and lowercase
+      if (dateA < dateB) {
+        return -1;
+      }
+      if (dateA > dateB) {
+        return 1;
+      }
+      // names must be equal
+      return 0;
+    }
+
+
+    let sortedNote;
+    if (sortField === "alphabet") {
+      if (ascending) {
+        sortedNote = this.state.filteredNote.sort(sortAlphabet)
+      } else {
+        sortedNote = this.state.filteredNote.sort(sortAlphabet).reverse()
+      }
+    } else {
+      if (ascending) {
+        sortedNote = this.state.filteredNote.sort(sortDate)
+      } else {
+        sortedNote = this.state.filteredNote.sort(sortDate).reverse()
+      }
+    }
+
+    this.setState({ filteredNote: sortedNote })
+
+  }
+
   deleteTag = (id, tag) => {
     console.log(id)
     console.log(tag)
@@ -100,6 +150,9 @@ class App extends Component {
       <div className="container">
         <InputNote onClick={this.postNote}></InputNote>
         <SearchBar filterNote={this.filterNote}></SearchBar>
+        <SortButton sortField="alphabet" handleSort={this.sortNote}></SortButton>
+        <SortButton sortField="date" handleSort={this.sortNote}></SortButton>
+
 
         {this.state.filteredNote.map((ele, index) => (
           <div className="viewNoteContainer mb-4 p-4" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
