@@ -9,6 +9,7 @@ import SearchBar from "./components/SearchBar";
 import ViewNote from "./components/ViewNote";
 import TagButton from "./components/TagButton";
 import PlusIcon from "./components/PlusIcon";
+import SortField from "./components/SortField";
 
 class App extends Component {
 
@@ -17,7 +18,7 @@ class App extends Component {
     this.state = {
       allNote: [],
       filteredNote: [],
-      search: ""
+      search: "",
     };
   }
 
@@ -28,14 +29,16 @@ class App extends Component {
   loadNote = () => {
     API.getAllNote()
       .then(res =>
-        this.setState({ allNote: res.data, filteredNote: res.data }, () => {
+        this.setState({ allNote: res.data }, () => {
           console.log(this.state)
+          this.filterNote(this.state.search)
         })
       )
       .catch(err => console.log(err));
   };
 
   postNote = (newNote) => {
+    // this.sortNote("date", false);
     console.log(newNote)
     API.saveNote(newNote)
       .then(res => {
@@ -65,20 +68,57 @@ class App extends Component {
       }
     }
 
-    this.setState({ search: search.toLowerCase() }, () => {
-      const filteredNote = this.state.allNote.filter(ele => testNote(ele.note, this.state.search) || testTag(ele.tag, this.state.search))
-      this.setState({ filteredNote: filteredNote })
+    this.setState({ search: search.toLowerCase() }, (filteredNote) => {
+      if (this.state.search.charAt(0) === "#") {
+        filteredNote = this.state.allNote.filter(ele => testTag(ele.tag, this.state.search.substr(1)))
+      } else {
+        filteredNote = this.state.allNote.filter(ele => testNote(ele.note, this.state.search) || testTag(ele.tag, this.state.search))
+      }
+      this.setState({ filteredNote: filteredNote }, () => { console.log(this.state.filteredNote) })
     })
   }
 
-  getHighlightedText(text, highlight) {
-    // Split on highlight term and include term into parts, ignore case
-    let parts = text.split(new RegExp(`(${highlight})`, 'gi'));
-    return <span> {parts.map((part, i) =>
-      <span key={i} style={part.toLowerCase() === highlight.toLowerCase() ? { fontWeight: 'bold' } : {}}>
-        {part}
-      </span>)
-    } </span>;
+  sortNote = (sortField, ascending) => {
+    console.log("Sort Notes");
+    const sortAlphabet = (a, b) => {
+      var noteA = a.note.toLowerCase(); // ignore upper and lowercase
+      var noteB = b.note.toLowerCase(); // ignore upper and lowercase
+      if (noteA < noteB) {
+        return -1;
+      }
+      if (noteA > noteB) {
+        return 1;
+      }
+      // names must be equal
+      return 0;
+    }
+    const sortDate = (a, b) => {
+      var dateA = a.date; // ignore upper and lowercase
+      var dateB = b.date; // ignore upper and lowercase
+      if (dateA < dateB) {
+        return -1;
+      }
+      if (dateA > dateB) {
+        return 1;
+      }
+      // names must be equal
+      return 0;
+    }
+    let sortedNote;
+    if (sortField === "alphabet") {
+      if (ascending) {
+        sortedNote = this.state.allNote.sort(sortAlphabet)
+      } else {
+        sortedNote = this.state.allNote.sort(sortAlphabet).reverse()
+      }
+    } else {
+      if (ascending) {
+        sortedNote = this.state.allNote.sort(sortDate)
+      } else {
+        sortedNote = this.state.allNote.sort(sortDate).reverse()
+      }
+    }
+    this.setState({ allNote: sortedNote }, () => { this.filterNote(this.state.search) })
   }
 
   deleteTag = (id, tag) => {
@@ -105,11 +145,10 @@ class App extends Component {
       <div className="container">
         <InputNote onClick={this.postNote}></InputNote>
         <SearchBar filterNote={this.filterNote}></SearchBar>
-
-
+        <SortField handleSort={this.sortNote}></SortField>
 
         {this.state.filteredNote.map((ele, index) => (
-          <div className="viewNoteContainer" key={index}>
+          <div className="viewNoteContainer mb-4 p-4" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
             <ViewNote
               key={ele._id}
               text={ele.note}
@@ -118,13 +157,17 @@ class App extends Component {
               deleteOnClick={() => this.deleteNote(ele._id)}
             ></ViewNote>
 
-            {ele.tag.sort().map((tagEle, index) => (
-              <TagButton
-                key={index}
-                text={tagEle}
-                highlight={this.state.search}
-                deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
+            <div className="tagContainer mb-3">
+              {ele.tag.sort().map((tagEle, index) => (
+                <TagButton
+                  key={index}
+                  text={tagEle}
+                  highlight={this.state.search.charAt(0) === "#" ? this.state.search.substr(1) : this.state.search}
+                  deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
                 </TagButton>))}
+              <div style={{ clear: 'both' }}></div>
+
+            </div>
 
             <PlusIcon callBackId={ele._id} callback={this.addTag}></PlusIcon>
           </div>
