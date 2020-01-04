@@ -15,11 +15,24 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  create: function (req, res) {
-    db.Note
-      .create(req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+  create: async (req, res) => {
+    console.log("add new note")
+    console.log(req.body)
+    try {
+      //1.create new documents in Note collection.
+      const newNote = await db.Note.create(req.body)
+      await res.json(newNote)
+
+      //2.push note id in each tag's documents.
+      for (var i = 0; i < newNote.tag.length; i++) {
+        await db.Tag.findOneAndUpdate({ tag: newNote.tag[i] }, { $push: { note: newNote._id } }, {
+          new: true,
+          upsert: true
+        })
+      }
+    } catch (err) {
+      return res.status(422).json(err)
+    }
   },
   update: function (req, res) {
     db.Note
@@ -37,6 +50,13 @@ module.exports = {
   filter: function (req, res) {
     console.log(req.query)
     db.Note
+      .find(req.query)
+      .sort({ date: -1 })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  findAllTag: function (req, res) {
+    db.Tag
       .find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
