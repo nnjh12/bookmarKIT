@@ -2,14 +2,14 @@ const db = require("../models");
 
 // Defining methods for the booksController
 module.exports = {
-  findAll: function (req, res) {
+  findAll: (req, res) => {
     db.Note
       .find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findById: function (req, res) {
+  findById: (req, res) => {
     db.Note
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
@@ -34,55 +34,72 @@ module.exports = {
       return res.status(422).json(err)
     }
   },
-  update: function (req, res) {
+  update: (req, res) => {
     db.Note
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  remove: function (req, res) {
-    db.Note
-      .findById({ _id: req.params.id })
-      .then(dbModel => dbModel.remove())
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+  remove: async (req, res) => {
+    try {
+      const deleteNote = await db.Note.findOneAndDelete({ _id: req.params.id })
+      await res.json(deleteNote)
+      await db.Tag.updateMany({ note: { $in: [req.params.id] } }, { $pullAll: { note: [req.params.id] } })
+      await db.Tag.remove({ note: { $exists: true, $size: 0 } })
+    } catch (err) {
+      return res.status(422).json(err)
+    }
   },
-  filter: function (req, res) {
-    console.log(req.query)
-    db.Note
-      .find(req.query)
-      .sort({ date: -1 })
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
-  },
-  findAllTag: function (req, res) {
+  // filter: function (req, res) {
+  //   console.log(req.query)
+  //   db.Note
+  //     .find(req.query)
+  //     .sort({ date: -1 })
+  //     .then(dbModel => res.json(dbModel))
+  //     .catch(err => res.status(422).json(err));
+  // },
+  findAllTag: (req, res) => {
     db.Tag
       .find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  removeTag: function (req, res) {
-    db.Note
-      .update({ _id: req.params.id }, { $pullAll: { tag: [req.params.tag] } })
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+  removeTag: async (req, res) => {
+    try {
+      const updateNote = await db.Note.updateOne({ _id: req.params.id }, { $pullAll: { tag: [req.params.tag] } })
+      await res.json(updateNote)
+      await db.Tag.updateOne({ tag: req.params.tag }, { $pullAll: { note: [req.params.id] } })
+      await db.Tag.remove({ note: { $exists: true, $size: 0 } })
+    } catch (err) {
+      return res.status(422).json(err)
+    }
   },
-  addTag: function (req, res) {
-    console.log("add tag back end")
-    console.log(req.body)
-    db.Note
-      .updateOne(
-        { _id: req.params.id },
-        {
-          $push: {
-            tag: {
-              $each: req.body,
+  addTag: async (req, res) => {
+    console.log(`add tag back end: ${req.body}`)
+
+    try {
+      const updatedNote = await db.Note
+        .updateOne(
+          { _id: req.params.id },
+          {
+            $push: {
+              tag: {
+                $each: req.body,
+              }
             }
           }
-        }
-      )
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+        )
+      await res.json(updatedNote)
+
+      for (var i = 0; i < req.body.length; i++) {
+        await db.Tag.findOneAndUpdate({ tag: req.body[i] }, { $push: { note: req.params.id } }, {
+          new: true,
+          upsert: true
+        })
+      }
+    } catch (err) {
+      return res.status(422).json(err)
+    }
   }
 };
