@@ -18,6 +18,10 @@ export default {
   saveNote: function (bookData) {
     return axios.post("/api/note", bookData);
   },
+  // Gets all tag
+  getAllTag: function () {
+    return axios.get("/api/tag");
+  },
   // Delete one tag from note
   deleteTag: function (id, tag) {
     return axios.put("/api/tag/" + id + "/" + tag)

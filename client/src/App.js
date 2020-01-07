@@ -17,6 +17,7 @@ class App extends Component {
     super(props);
     this.state = {
       allNote: [],
+      allTag: [],
       filteredNote: [],
       search: "",
     };
@@ -26,15 +27,26 @@ class App extends Component {
     this.loadNote();
   }
 
-  loadNote = () => {
-    API.getAllNote()
-      .then(res =>
-        this.setState({ allNote: res.data }, () => {
-          console.log(this.state)
-          this.filterNote(this.state.search)
-        })
-      )
-      .catch(err => console.log(err));
+  loadNote = async () => {
+    try {
+      const allNote = await API.getAllNote()
+      const allTag = await API.getAllTag()
+
+      this.setState({ allNote: allNote.data, allTag: allTag.data }, () => {
+        console.log(this.state)
+        this.filterNote(this.state.search)
+      })
+    } catch (err) {
+      console.log(err)
+    }
+    // API.getAllNote()
+    //   .then(res =>
+    //     this.setState({ allNote: res.data }, () => {
+    //       console.log(this.state)
+    //       this.filterNote(this.state.search)
+    //     })
+    //   )
+    //   .catch(err => console.log(err));
   };
 
   postNote = (newNote) => {
@@ -145,6 +157,19 @@ class App extends Component {
       <div className="container">
         <InputNote onClick={this.postNote}></InputNote>
         <SearchBar filterNote={this.filterNote}></SearchBar>
+        <div style={{
+          overflow: "hidden",
+          display: "block",
+          clear: "both"
+        }}>
+          {this.state.allTag.sort().map((tagEle, index) => (
+            <TagButton
+              key={index}
+              text={tagEle.tag}
+              highlight={this.state.search.charAt(0) === "#" ? this.state.search.substr(1) : this.state.search}
+            ></TagButton>))}
+        </div>
+
         <SortField handleSort={this.sortNote}></SortField>
 
         {this.state.filteredNote.map((ele, index) => (

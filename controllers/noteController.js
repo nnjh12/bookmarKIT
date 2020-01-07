@@ -25,7 +25,7 @@ module.exports = {
 
       //2.push note id in each tag's documents.
       for (var i = 0; i < newNote.tag.length; i++) {
-        await db.Tag.findOneAndUpdate({ tag: newNote.tag[i] }, { $push: { note: newNote._id } }, {
+        await db.Tag.findOneAndUpdate({ tag: newNote.tag[i] }, { $addToSet: { note: newNote._id } }, {
           new: true,
           upsert: true
         })
@@ -83,7 +83,7 @@ module.exports = {
         .updateOne(
           { _id: req.params.id },
           {
-            $push: {
+            $addToSet: {
               tag: {
                 $each: req.body,
               }
@@ -93,7 +93,7 @@ module.exports = {
       await res.json(updatedNote)
 
       for (var i = 0; i < req.body.length; i++) {
-        await db.Tag.findOneAndUpdate({ tag: req.body[i] }, { $push: { note: req.params.id } }, {
+        await db.Tag.findOneAndUpdate({ tag: req.body[i] }, { $addToSet: { note: req.params.id } }, {
           new: true,
           upsert: true
         })
