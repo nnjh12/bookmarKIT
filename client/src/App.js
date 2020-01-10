@@ -5,6 +5,7 @@ import API from "./utils/api";
 
 import InputNote from "./components/InputNote";
 import SearchBar from "./components/SearchBar";
+import TagList from "./components/TagList";
 
 import ViewNote from "./components/ViewNote";
 import TagButton from "./components/TagButton";
@@ -19,7 +20,7 @@ class App extends Component {
       allNote: [],
       allTag: [],
       filteredNote: [],
-      search: "",
+      search: ""
     };
   }
 
@@ -157,18 +158,8 @@ class App extends Component {
       <div className="container">
         <InputNote onClick={this.postNote}></InputNote>
         <SearchBar filterNote={this.filterNote}></SearchBar>
-        <div style={{
-          overflow: "hidden",
-          display: "block",
-          clear: "both"
-        }}>
-          {this.state.allTag.sort().map((tagEle, index) => (
-            <TagButton
-              key={index}
-              text={tagEle.tag}
-              highlight={this.state.search.charAt(0) === "#" ? this.state.search.substr(1) : this.state.search}
-            ></TagButton>))}
-        </div>
+
+        <TagList allTag={this.state.allTag} filter={this.filterNote}></TagList>
 
         <SortField handleSort={this.sortNote}></SortField>
 
