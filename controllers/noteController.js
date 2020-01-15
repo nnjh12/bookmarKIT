@@ -61,7 +61,15 @@ module.exports = {
   findAllTag: (req, res) => {
     db.Tag
       .find(req.query)
-      .sort({ date: -1 })
+      .sort({ tag: 1 })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  findByTag: (req, res) => {
+    db.Tag
+      .find(req.query)
+      .populate("note")
+      .sort({ tag: 1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

@@ -8,6 +8,7 @@ router.route("/")
 
 // Matches with "/api/tag/:id"
 router.route("/:id")
+  .get(noteController.findByTag)
   .put(noteController.addTag)
 
 // Matches with "/api/tag/:id/:tag"
