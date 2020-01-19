@@ -7,7 +7,7 @@ import Highlight from "./Highlight";
 class TagButton extends Component {
     render() {
         return (
-                <Button className="float-left">
+                <Button className="float-left" onClick={this.props.onClick}>
                     <div>
                         <div className="float-right ml-3">
                             <DeleteIcon fontColor="white" deleteOnClick={this.props.deleteTag}></DeleteIcon>

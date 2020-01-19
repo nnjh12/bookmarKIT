@@ -1,4 +1,5 @@
 module.exports = {
-    Note: require("./note")
+    Note: require("./note"),
+    Tag: require("./tag")
   };
   
