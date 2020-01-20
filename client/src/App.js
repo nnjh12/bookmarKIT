@@ -20,7 +20,8 @@ class App extends Component {
       allNote: [],
       allTag: [],
       filteredNote: [],
-      search: ""
+      search: "",
+      searchByButton: ""
     };
   }
 
@@ -35,19 +36,11 @@ class App extends Component {
 
       this.setState({ allNote: allNote.data, allTag: allTag.data }, () => {
         console.log(this.state)
-        this.filterNote(this.state.search)
+        this.handleFilter(this.state.search, this.state.searchByButton)
       })
     } catch (err) {
       console.log(err)
     }
-    // API.getAllNote()
-    //   .then(res =>
-    //     this.setState({ allNote: res.data }, () => {
-    //       console.log(this.state)
-    //       this.filterNote(this.state.search)
-    //     })
-    //   )
-    //   .catch(err => console.log(err));
   };
 
   postNote = (newNote) => {
@@ -70,8 +63,8 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
-  filterNote = (search) => {
-    const testNote = (str, key) => {
+  testByInput = (note, input) => {
+    const testKeyword = (str, key) => {
       return str.toLowerCase().indexOf(key) > -1
     }
     const testTag = (arr, key) => {
@@ -81,56 +74,40 @@ class App extends Component {
         }
       }
     }
-
-    this.setState({ search: search.toLowerCase() }, (filteredNote) => {
-      console.log(this.state.search)
-
-      if (this.state.search.charAt(0) === "#") {
-        filteredNote = this.state.allNote.filter(ele => testTag(ele.tag, this.state.search.substr(1)))
+    if (input === "") {
+      return true;
+    } else {
+      if (input.charAt(0) === "#") {
+        return testTag(note.tag, input.substr(1))
       } else {
-        filteredNote = this.state.allNote.filter(ele => testNote(ele.note, this.state.search) || testTag(ele.tag, this.state.search))
+        return testKeyword(note.keyword, input) || testTag(note.tag, input)
       }
-      this.setState({ filteredNote: filteredNote }, () => {
-        console.log(this.state.filteredNote)
-        if (this.state.filteredNote.length === 0) {
-          this.setState({ search: "", filteredNote: this.state.allNote })
-        }
-      })
-    })
+    }
   }
 
-  findExactMatchTag = (search) => {
-    const testTag = (arr, key) => {
+  testByButton = (note, button) => {
+    const testTagExactly = (arr, key) => {
       for (var i = 0; i < arr.length; i++) {
         if (arr[i] === key) {
           return true;
         }
       }
     }
-
-    if (this.state.search === search) {
-      console.log("find Exact Match- undo filter")
-      console.log("prev search " + this.state.search)
-      console.log("user search " + search)
-      this.setState({ search: "" }, () => {
-        console.log("updated search " + this.state.search)
-        this.filterNote(this.state.search)
-      })
+    if (button === "") {
+      return true;
     } else {
-      console.log("find Exact Match- filter")
-      console.log("prev search " + this.state.search)
-      console.log("user search " + search)
-
-      this.setState({ search: search }, (filteredNote) => {
-        console.log("updated search " + this.state.search)
-        filteredNote = this.state.allNote.filter(ele => testTag(ele.tag, this.state.search))
-        this.setState({ filteredNote: filteredNote }, () => {
-          console.log(this.state.filteredNote)
-        })
-      })
+      return testTagExactly(note.tag, button)
     }
   }
-  
+
+  handleFilter = (search1, search2) => {
+    console.log("handle filter")
+    this.setState({ search: search1, searchByButton: search2 }, (filteredNote) => {
+      filteredNote = this.state.allNote.filter(ele => this.testByInput(ele, this.state.search) && this.testByButton(ele, this.state.searchByButton))
+      this.setState({ filteredNote })
+    })
+  }
+
   sortNote = (sortField, ascending) => {
     console.log("Sort Notes");
     const sortAlphabet = (a, b) => {
@@ -171,7 +148,7 @@ class App extends Component {
         sortedNote = this.state.allNote.sort(sortDate).reverse()
       }
     }
-    this.setState({ allNote: sortedNote }, () => { this.filterNote(this.state.search) })
+    this.setState({ allNote: sortedNote }, () => { this.handleFilter(this.state.search, this.state.searchByButton) })
   }
 
   deleteTag = (id, tag) => {
@@ -197,21 +174,26 @@ class App extends Component {
     return (
       <div className="container">
         <InputNote onClick={this.postNote}></InputNote>
-        <SearchBar filterNote={this.filterNote}></SearchBar>
+        <SearchBar
+          handleFilter={this.handleFilter}
+          allTag={this.state.allTag}
+          search={this.state.searchByButton}>
+        </SearchBar>
 
-        <TagList
+        {/* <TagList
           allTag={this.state.allTag}
           search={this.state.search}
           onClick={this.findExactMatchTag}
-        ></TagList>
+        ></TagList> */}
 
-        <SortField handleSort={this.sortNote}></SortField>
+        {/* <SortField handleSort={this.sortNote}></SortField> */}
 
         {this.state.filteredNote.map((ele, index) => (
           <div className="viewNoteContainer mb-4 p-4" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
             <ViewNote
               key={ele._id}
-              text={ele.note}
+              bookmark={ele.bookmark}
+              keyword={ele.keyword}
               highlight={this.state.search}
               date={ele.date}
               deleteOnClick={() => this.deleteNote(ele._id)}
