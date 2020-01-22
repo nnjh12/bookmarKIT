@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import "./App.css";
 import API from "./utils/api";
 
-
 import InputNote from "./components/InputNote";
 import SearchBar from "./components/SearchBar";
-import TagList from "./components/TagList";
-
 import ViewNote from "./components/ViewNote";
 import TagButton from "./components/TagButton";
 import PlusIcon from "./components/PlusIcon";
@@ -20,45 +17,37 @@ class App extends Component {
       allNote: [],
       allTag: [],
       filteredNote: [],
-      search: ""
+      filteredTag: [],
+      search1: "",
+      search2: []
     };
   }
 
   componentDidMount() {
     this.loadNote();
-  }
+  };
 
   loadNote = async () => {
     try {
-      const allNote = await API.getAllNote()
-      const allTag = await API.getAllTag()
-
+      const allNote = await API.getAllNote();
+      const allTag = await API.getAllTag();
+      
       this.setState({ allNote: allNote.data, allTag: allTag.data }, () => {
         console.log(this.state)
-        this.filterNote(this.state.search)
+        this.handleFilter(this.state.search1, this.state.search2)
       })
     } catch (err) {
       console.log(err)
     }
-    // API.getAllNote()
-    //   .then(res =>
-    //     this.setState({ allNote: res.data }, () => {
-    //       console.log(this.state)
-    //       this.filterNote(this.state.search)
-    //     })
-    //   )
-    //   .catch(err => console.log(err));
   };
 
   postNote = (newNote) => {
     // this.sortNote("date", false);
-    console.log(newNote)
+    console.log(newNote);
     API.saveNote(newNote)
       .then(res => {
         console.log("just saved")
-        this.loadNote();
-        // this.setState({ allNote: [res.data, ...this.state.allNote] }, () => console.log(this.state.allNote))
-        // this.filterNote(this.state.search)
+        this.loadNote()
       })
       .catch(err => console.log(err));
   };
@@ -70,72 +59,66 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
-  filterNote = (search) => {
-    const testNote = (str, key) => {
-      return str.toLowerCase().indexOf(key) > -1
-    }
+  testByInput = (note, input) => {
+    const testKeyword = (str, key) => {
+      return str.toLowerCase().indexOf(key) > -1;
+    };
     const testTag = (arr, key) => {
       for (var i = 0; i < arr.length; i++) {
         if (arr[i].toLowerCase().indexOf(key) > -1) {
           return true;
         }
       }
-    }
-
-    this.setState({ search: search.toLowerCase() }, (filteredNote) => {
-      console.log(this.state.search)
-
-      if (this.state.search.charAt(0) === "#") {
-        filteredNote = this.state.allNote.filter(ele => testTag(ele.tag, this.state.search.substr(1)))
+    };
+    if (input === "") {
+      return true;
+    } else {
+      if (input.charAt(0) === "#") {
+        return testTag(note.tag, input.substr(1));
       } else {
-        filteredNote = this.state.allNote.filter(ele => testNote(ele.note, this.state.search) || testTag(ele.tag, this.state.search))
+        return testKeyword(note.keyword, input) || testTag(note.tag, input);
       }
-      this.setState({ filteredNote: filteredNote }, () => {
-        console.log(this.state.filteredNote)
-        if (this.state.filteredNote.length === 0) {
-          this.setState({ search: "", filteredNote: this.state.allNote })
-        }
-      })
-    })
-  }
+    }
+  };
 
-  findExactMatchTag = (search) => {
-    const testTag = (arr, key) => {
+  testByButton = (note, buttonArr) => {
+    const testTagExactly = (arr, key) => {
       for (var i = 0; i < arr.length; i++) {
         if (arr[i] === key) {
           return true;
         }
       }
     }
-
-    if (this.state.search === search) {
-      console.log("find Exact Match- undo filter")
-      console.log("prev search " + this.state.search)
-      console.log("user search " + search)
-      this.setState({ search: "" }, () => {
-        console.log("updated search " + this.state.search)
-        this.filterNote(this.state.search)
-      })
+    if (buttonArr.length === 0) {
+      return true;
     } else {
-      console.log("find Exact Match- filter")
-      console.log("prev search " + this.state.search)
-      console.log("user search " + search)
-
-      this.setState({ search: search }, (filteredNote) => {
-        console.log("updated search " + this.state.search)
-        filteredNote = this.state.allNote.filter(ele => testTag(ele.tag, this.state.search))
-        this.setState({ filteredNote: filteredNote }, () => {
-          console.log(this.state.filteredNote)
-        })
-      })
+      return buttonArr.every(j => testTagExactly(note.tag, j));
     }
-  }
-  
+  };
+
+  filterTag = (note) => {
+    let filteredTag = [];
+    for (let i = 0; i < note.length; i++) {
+      for (let j = 0; j < note[i].tag.length; j++) {
+        if (!filteredTag.includes(note[i].tag[j])) {
+          filteredTag.push(note[i].tag[j])
+        }
+      }
+    }
+    this.setState({ filteredTag })
+  };
+
+  handleFilter = (search1, search2) => {
+    this.setState({ search1: search1, search2: search2 }, (filteredNote) => {
+      filteredNote = this.state.allNote.filter(ele => this.testByInput(ele, this.state.search1) && this.testByButton(ele, this.state.search2))
+      this.setState({ filteredNote }, () => this.filterTag(this.state.filteredNote))
+    })
+  };
+
   sortNote = (sortField, ascending) => {
-    console.log("Sort Notes");
     const sortAlphabet = (a, b) => {
-      var noteA = a.note.toLowerCase(); // ignore upper and lowercase
-      var noteB = b.note.toLowerCase(); // ignore upper and lowercase
+      var noteA = a.keyword.toLowerCase(); // ignore upper and lowercase
+      var noteB = b.keyword.toLowerCase(); // ignore upper and lowercase
       if (noteA < noteB) {
         return -1;
       }
@@ -144,7 +127,7 @@ class App extends Component {
       }
       // names must be equal
       return 0;
-    }
+    };
     const sortDate = (a, b) => {
       var dateA = a.date; // ignore upper and lowercase
       var dateB = b.date; // ignore upper and lowercase
@@ -156,7 +139,7 @@ class App extends Component {
       }
       // names must be equal
       return 0;
-    }
+    };
     let sortedNote;
     if (sortField === "alphabet") {
       if (ascending) {
@@ -171,39 +154,34 @@ class App extends Component {
         sortedNote = this.state.allNote.sort(sortDate).reverse()
       }
     }
-    this.setState({ allNote: sortedNote }, () => { this.filterNote(this.state.search) })
-  }
+    this.setState({ allNote: sortedNote }, () => { this.handleFilter(this.state.search1, this.state.search2) })
+  };
 
   deleteTag = (id, tag) => {
-    console.log(id)
-    console.log(tag)
     API.deleteTag(id, tag)
       .then(this.loadNote)
       .catch(err => console.log(err));
-  }
+  };
 
   addTag = (id, newTag) => {
-    console.log("App.js addTag")
     API.addTag(id, newTag)
       .then(response => {
-        console.log(response.data);
+        console.log(response.data)
         this.loadNote()
       })
-      // .then(this.loadNote)
       .catch(err => console.log(err));
-  }
+  };
 
   render() {
     return (
       <div className="container">
         <InputNote onClick={this.postNote}></InputNote>
-        <SearchBar filterNote={this.filterNote}></SearchBar>
-
-        <TagList
+        <SearchBar
+          handleFilter={this.handleFilter}
           allTag={this.state.allTag}
-          search={this.state.search}
-          onClick={this.findExactMatchTag}
-        ></TagList>
+          filteredTag={this.state.filteredTag}
+          search={this.state.search2}>
+        </SearchBar>
 
         <SortField handleSort={this.sortNote}></SortField>
 
@@ -211,8 +189,9 @@ class App extends Component {
           <div className="viewNoteContainer mb-4 p-4" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
             <ViewNote
               key={ele._id}
-              text={ele.note}
-              highlight={this.state.search}
+              bookmark={ele.bookmark}
+              keyword={ele.keyword}
+              highlight={this.state.search1}
               date={ele.date}
               deleteOnClick={() => this.deleteNote(ele._id)}
             ></ViewNote>
@@ -222,7 +201,8 @@ class App extends Component {
                 <TagButton
                   key={index}
                   text={tagEle}
-                  highlight={this.state.search.charAt(0) === "#" ? this.state.search.substr(1) : this.state.search}
+                  search={this.state.search2}
+                  highlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
                   deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
                 </TagButton>))}
               <div style={{ clear: 'both' }}></div>

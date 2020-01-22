@@ -13,8 +13,9 @@ class ViewNote extends Component {
                 </div>
 
                 <div>
-                    <h3><Highlight text={this.props.text} highlight={this.props.highlight}></Highlight></h3>
-
+                    <a href={this.props.bookmark} target="_blank" rel="noopener noreferrer">
+                        <h3><Highlight text={this.props.keyword} highlight={this.props.highlight}></Highlight></h3>
+                    </a>
                 </div>
                 <p>{moment(this.props.date).format("YYYY-MM-DD h:mm a")}</p>
             </div>
