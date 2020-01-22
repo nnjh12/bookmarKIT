@@ -34,7 +34,7 @@ class SearchBar extends Component {
                 <div>
                     <i className="fas fa-search" aria-hidden="true"></i>
                     <input className="form-control form-control-sm ml-3" type="text" placeholder="Search"
-                        aria-label="Search" name="search1" onChange={this.handleInputChange} value={this.state.searchKey}></input>
+                        aria-label="Search" name="search1" onChange={this.handleInputChange} value={this.state.search1}></input>
                 </div>
 
                 <div>

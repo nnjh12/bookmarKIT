@@ -13,7 +13,7 @@ class ViewNote extends Component {
                 </div>
 
                 <div>
-                    <a href={this.props.bookmark} target="_blank">
+                    <a href={this.props.bookmark} target="_blank" rel="noopener noreferrer">
                         <h3><Highlight text={this.props.keyword} highlight={this.props.highlight}></Highlight></h3>
                     </a>
                 </div>
