@@ -16,7 +16,7 @@ class TagList extends Component {
                 {this.props.allTag.sort().map((tagEle, index) => (
                     <button
                         className={tagEle.tag === this.props.search ? "btn active" : "btn"}
-                        style={{ backgroundColor: this.props.search === tagEle.tag ? "green" : "" }}
+                        style={{ backgroundColor: this.props.search === tagEle.tag ? "#ffbb33" : "" }}
                         key={index}
                         onClick={() => this.handleOnClick(tagEle.tag)}>
                         {tagEle.tag}

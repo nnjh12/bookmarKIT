@@ -21,7 +21,7 @@ class App extends Component {
       allTag: [],
       filteredNote: [],
       search: "",
-      searchByButton: ""
+      searchByButton: []
     };
   }
 
@@ -85,7 +85,7 @@ class App extends Component {
     }
   }
 
-  testByButton = (note, button) => {
+  testByButton = (note, buttonArr) => {
     const testTagExactly = (arr, key) => {
       for (var i = 0; i < arr.length; i++) {
         if (arr[i] === key) {
@@ -93,12 +93,28 @@ class App extends Component {
         }
       }
     }
-    if (button === "") {
+    if (buttonArr.length === 0) {
       return true;
     } else {
-      return testTagExactly(note.tag, button)
+      // return testTagExactly(note.tag, buttonArr[0]) && testTagExactly(note.tag, buttonArr[1]) 
+      return buttonArr.every(x => testTagExactly(note.tag, x))
     }
   }
+
+  // testByButton = (note, button) => {
+  //   const testTagExactly = (arr, key) => {
+  //     for (var i = 0; i < arr.length; i++) {
+  //       if (arr[i] === key) {
+  //         return true;
+  //       }
+  //     }
+  //   }
+  //   if (button === "") {
+  //     return true;
+  //   } else {
+  //     return testTagExactly(note.tag, button)
+  //   }
+  // }
 
   handleFilter = (search1, search2) => {
     console.log("handle filter")
@@ -111,8 +127,8 @@ class App extends Component {
   sortNote = (sortField, ascending) => {
     console.log("Sort Notes");
     const sortAlphabet = (a, b) => {
-      var noteA = a.note.toLowerCase(); // ignore upper and lowercase
-      var noteB = b.note.toLowerCase(); // ignore upper and lowercase
+      var noteA = a.keyword.toLowerCase(); // ignore upper and lowercase
+      var noteB = b.keyword.toLowerCase(); // ignore upper and lowercase
       if (noteA < noteB) {
         return -1;
       }
@@ -186,7 +202,7 @@ class App extends Component {
           onClick={this.findExactMatchTag}
         ></TagList> */}
 
-        {/* <SortField handleSort={this.sortNote}></SortField> */}
+        <SortField handleSort={this.sortNote}></SortField>
 
         {this.state.filteredNote.map((ele, index) => (
           <div className="viewNoteContainer mb-4 p-4" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
@@ -204,6 +220,7 @@ class App extends Component {
                 <TagButton
                   key={index}
                   text={tagEle}
+                  search={this.state.searchByButton}
                   highlight={this.state.search.charAt(0) === "#" ? this.state.search.substr(1) : this.state.search}
                   deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
                 </TagButton>))}
