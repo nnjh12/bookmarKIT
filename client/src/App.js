@@ -20,6 +20,7 @@ class App extends Component {
       allNote: [],
       allTag: [],
       filteredNote: [],
+      filteredTag: [],
       search: "",
       searchByButton: []
     };
@@ -101,6 +102,18 @@ class App extends Component {
     }
   }
 
+  filterTag = (note) => {
+    let filteredTag = [];
+    for (let i = 0; i < note.length; i++) {
+      for (let j = 0; j < note[i].tag.length; j++) {
+        if (!filteredTag.includes(note[i].tag[j])) {
+          filteredTag.push(note[i].tag[j])
+        }
+      }
+    }
+    this.setState({ filteredTag })
+  }
+
   // testByButton = (note, button) => {
   //   const testTagExactly = (arr, key) => {
   //     for (var i = 0; i < arr.length; i++) {
@@ -120,7 +133,7 @@ class App extends Component {
     console.log("handle filter")
     this.setState({ search: search1, searchByButton: search2 }, (filteredNote) => {
       filteredNote = this.state.allNote.filter(ele => this.testByInput(ele, this.state.search) && this.testByButton(ele, this.state.searchByButton))
-      this.setState({ filteredNote })
+      this.setState({ filteredNote }, () => this.filterTag(this.state.filteredNote))
     })
   }
 
@@ -193,6 +206,7 @@ class App extends Component {
         <SearchBar
           handleFilter={this.handleFilter}
           allTag={this.state.allTag}
+          filteredTag={this.state.filteredTag}
           search={this.state.searchByButton}>
         </SearchBar>
 

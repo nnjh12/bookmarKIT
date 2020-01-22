@@ -41,7 +41,10 @@ class SearchBar extends Component {
                     {this.props.allTag.sort().map((tagEle, index) => (
                         <button
                             className={this.state.search2.includes(tagEle.tag) ? "btn active" : "btn"}
-                            style={{ backgroundColor: this.state.search2.includes(tagEle.tag) ? "#ffbb33" : "" }}
+                            style={{
+                                backgroundColor: this.state.search2.includes(tagEle.tag) ? "#ffbb33" : "",
+                                opacity: this.props.filteredTag.includes(tagEle.tag) ? "1" : "0.5"
+                            }}
                             key={index}
                             onClick={() => this.handleOnClick(tagEle.tag)}>
                             #{tagEle.tag}
