@@ -7,6 +7,7 @@ import SearchBar from "./components/SearchBar";
 import ViewNote from "./components/ViewNote";
 import TagButton from "./components/TagButton";
 import PlusIcon from "./components/PlusIcon";
+import AddTag from "./components/AddTag";
 import SortField from "./components/SortField";
 
 class App extends Component {
@@ -210,6 +211,7 @@ class App extends Component {
             </div>
 
             <PlusIcon callBackId={ele._id} callback={this.addTag} allTag={this.state.allTag}></PlusIcon>
+            <AddTag callBackId={ele._id} callback={this.addTag} allTag={this.state.allTag}></AddTag>
           </div>
         ))}
 
