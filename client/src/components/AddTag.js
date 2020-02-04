@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import TagButton from "./TagButton";
 
 class AddTag extends Component {
     constructor(props) {
@@ -20,39 +21,15 @@ class AddTag extends Component {
     onKeyDown = (event) => {
         if (event.key === "Tab") {
             event.preventDefault();
-            this.createNewTagButton(event.target.value)
             let newTagList = [...this.state.newTagList, event.target.value]
             this.setState({ newTag: "", newTagList: newTagList })
         }
     }
 
-    createNewTagButton = (label) => {
-        const div = document.createElement('div');
-        div.setAttribute('class', 'tag');
-        const span = document.createElement('span');
-        span.innerHTML = label;
-        // const closeIcon = document.createElement('i');
-        // closeIcon.innerHTML = 'close';
-        // closeIcon.setAttribute('class', 'material-icons');
-        // closeIcon.setAttribute('data-item', label);
-        div.appendChild(span);
-        // div.appendChild(closeIcon);
-        document.querySelector('.tagList').append(div)
-        // return div;
+    removeTag = (index) => {
+        let newTagList = [...this.state.newTagList.slice(0, index), ...this.state.newTagList.slice(index + 1)];
+        this.setState({ newTagList })
     }
-
-    clearTags = () => {
-        document.querySelectorAll('.tag').forEach(tag => {
-            tag.parentElement.removeChild(tag);
-        });
-    }
-
-    // addTags = () => {
-    //     clearTags();
-    //     tags.slice().reverse().forEach(tag => {
-    //         tagInputContainer.prepend(createTag(tag));
-    //     });
-    // }
 
     onSubmit = () => {
         console.log("tags add button clicked")
@@ -69,6 +46,16 @@ class AddTag extends Component {
             <form>
                 <div className="tagInputContainer">
                     <div className="tagList">
+                        {this.state.newTagList.map((ele, index) =>
+                            <div key={index}>
+                                <div>
+                                    <div className="float-right ml-3" onClick={() => this.removeTag(index)}>
+                                        <i className="fas fa-times"></i>
+                                    </div>
+                                    <span style={{ color: this.props.allTag.includes(ele) ? "red" : "black" }}>#{ele}</span>
+                                </div>
+                            </div>
+                        )}
 
                     </div>
                     <input
@@ -85,7 +72,7 @@ class AddTag extends Component {
                         className="btn btn-md btn-default m-0 px-3"
                         type="submit"
                         value="Add"
-                        disabled={this.state.newTag ? false : true}
+                        disabled={this.state.newTagList.length === 0 ? true : false}
                         onClick={this.onSubmit}>
                     </input>
                 </div>
