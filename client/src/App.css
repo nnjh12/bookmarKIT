@@ -18,14 +18,42 @@
   font-size: large;
 }
 
-.tagInputContainer {
-  border: 2px solid #ccc;
-  border-radius: 3px;
-  background: #fff;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  padding: 6px;
+/* Add Tag Style */
+.tagInputContainer .tagList > div{
+  background-color:green;
+  /* display: inline-block; */
+  float: left;
+  margin-right: 10px;
+  padding: 2px;
+}
+
+.tagInputContainer .tagList .closeButton {
+  float: right;
+  margin-left: 10px;
+}
+
+.tagInputContainer form {
+  display: inline-block;
+  position: relative;
+  clear: both;
+}
+
+.tagInputContainer form input[type="text"] {
+  padding-right: 80px;
+}
+.tagInputContainer form input[type="submit"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+}
+
+.tagInputContainer .suggestion > div {
+  background-color: white;
+}
+
+.tagInputContainer .suggestion > div:hover {
+  background-color: green;
 }
 
 @keyframes App-logo-spin {

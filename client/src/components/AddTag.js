@@ -7,6 +7,7 @@ class AddTag extends Component {
         this.state = {
             newTag: "",
             newTagList: [],
+            suggestion: [],
             placeholder: "Add new tags here."
         };
     }
@@ -15,15 +16,31 @@ class AddTag extends Component {
         const { name, value } = event.target;
         this.setState({
             [name]: value
-        });
+        }, () => { this.handleAutoSuggestion(this.props.userAllTag, this.state.newTag) });
     };
 
     onKeyDown = (event) => {
         if (event.key === "Tab") {
             event.preventDefault();
-            let newTagList = [...this.state.newTagList, event.target.value]
-            this.setState({ newTag: "", newTagList: newTagList })
+            let newTagList = [...this.state.newTagList, event.target.value.toLowerCase()]
+            this.setState({ newTag: "", newTagList: newTagList, suggestion: [] })
         }
+    }
+
+    handleAutoSuggestion = (tagArray, input) => {
+        let suggestion;
+        if (this.state.newTag === "") {
+            suggestion = [];
+        } else {
+            suggestion = tagArray.filter(i => i.tag.startsWith(input)).map(ele => ele.tag);
+        }
+        console.log(suggestion)
+        this.setState({ suggestion }, () => { console.log(this.state.suggestion) })
+    }
+
+    handleSuggestionClick = (clicked) => {
+        let newTagList = [...this.state.newTagList, clicked]
+        this.setState({ newTag: "", newTagList: newTagList, suggestion: [] })
     }
 
     removeTag = (index) => {
@@ -43,40 +60,46 @@ class AddTag extends Component {
 
     render() {
         return (
-            <form>
-                <div className="tagInputContainer">
-                    <div className="tagList">
-                        {this.state.newTagList.map((ele, index) =>
-                            <div key={index}>
-                                <div>
-                                    <div className="float-right ml-3" onClick={() => this.removeTag(index)}>
-                                        <i className="fas fa-times"></i>
-                                    </div>
-                                    <span style={{ color: this.props.allTag.includes(ele) ? "red" : "black" }}>#{ele}</span>
-                                </div>
+            <div className="tagInputContainer">
+                <div className="tagList">
+                    {this.state.newTagList.map((ele, index) =>
+                        <div key={index}>
+                            <div className="closeButton" onClick={() => this.removeTag(index)}>
+                                <i className="fas fa-times"></i>
                             </div>
-                        )}
-
-                    </div>
+                            <span style={{ color: this.props.allTag.includes(ele) ? "red" : "black" }}>#{ele}</span>
+                        </div>
+                    )}
+                </div>
+                <div className="clearFloat" style={{ clear: "both" }}></div>
+                <form>
                     <input
                         type="text"
-                        className="form-control"
+                        // className="form-control"
                         placeholder={this.state.placeholder}
                         name="newTag"
                         onChange={this.handleInputChange}
                         onKeyDown={this.onKeyDown}
                         value={this.state.newTag}>
                     </input>
-
+                    <div className="suggestion">
+                        {this.state.suggestion.map((ele, index) =>
+                            <div key={index} onClick={() => this.handleSuggestionClick(ele)}>
+                                {ele}
+                            </div>
+                        )}
+                    </div>
                     <input
-                        className="btn btn-md btn-default m-0 px-3"
+                        // className="btn btn-md btn-default m-0 px-3"
                         type="submit"
                         value="Add"
                         disabled={this.state.newTagList.length === 0 ? true : false}
                         onClick={this.onSubmit}>
                     </input>
-                </div>
-            </form>
+                </form>
+
+            </div>
+
         );
     }
 }

@@ -210,8 +210,7 @@ class App extends Component {
 
             </div>
 
-            <PlusIcon callBackId={ele._id} callback={this.addTag} allTag={this.state.allTag}></PlusIcon>
-            <AddTag callBackId={ele._id} callback={this.addTag} allTag={ele.tag}></AddTag>
+            <AddTag callBackId={ele._id} callback={this.addTag} allTag={ele.tag} userAllTag={this.state.allTag}></AddTag>
           </div>
         ))}
 
