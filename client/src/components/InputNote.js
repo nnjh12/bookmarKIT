@@ -40,6 +40,8 @@ class InputNote extends Component {
         });
     }
 
+    
+
     render() {
         return (
             <form>
@@ -73,6 +75,12 @@ class InputNote extends Component {
                     value={this.state.tagUserInput}
                     placeholder={this.state.placeholder.tag}>
                 </input>
+
+                <div className="tags-input" data-name="tags-input">
+                    {/* <span className="tag">CSS<span className="close"></span></span>
+                    <span className="tag">JavaScript<span className="close"></span></span>
+                    <span className="tag">HTML<span className="close"></span></span> */}
+                </div>
 
                 <input type="submit" value="Save" disabled={this.state.bookmarkUserInput ? false : true} onClick={this.onSubmit}></input>
 

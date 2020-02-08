@@ -13,6 +13,8 @@ class PlusIcon extends Component {
         const { name, value } = event.target;
         this.setState({
             [name]: value
+        }, () => {
+            this.handleAutoSuggestion(this.props.allTag, this.state.newTag.substring(1))
         });
     };
 
@@ -25,6 +27,11 @@ class PlusIcon extends Component {
 
         this.props.callback(this.props.callBackId, filtered)
         this.setState({ newTag: "" });
+    }
+
+    handleAutoSuggestion = (tagArray, input) => {
+        let suggestion = tagArray.filter(i=>i.tag.startsWith(input))
+        console.log(suggestion)
     }
 
     render() {
