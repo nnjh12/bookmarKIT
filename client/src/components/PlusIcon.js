@@ -5,6 +5,7 @@ class PlusIcon extends Component {
         super(props);
         this.state = {
             newTag: "",
+            suggestion: [],
             placeholder: "Add new tags here."
         };
     }
@@ -13,9 +14,7 @@ class PlusIcon extends Component {
         const { name, value } = event.target;
         this.setState({
             [name]: value
-        }, () => {
-            this.handleAutoSuggestion(this.props.allTag, this.state.newTag.substring(1))
-        });
+        }, () => this.handleHashTag(this.state.newTag));
     };
 
     onSubmit = () => {
@@ -29,9 +28,31 @@ class PlusIcon extends Component {
         this.setState({ newTag: "" });
     }
 
+    // onKeyDownHashTag = (event) => {
+    //     if (event.key === "#") {
+    //         console.log(event.target.value)
+    //         event.preventDefault();
+    //         // this.handleAutoSuggestion(this.props.userAllTag, this.state.newTag)
+    //         // let newTagList = [...this.state.newTagList, event.target.value.toLowerCase()]
+    //         // this.setState({ newTag: "", newTagList: newTagList, suggestion: [] })
+    //     }
+    // }
+
+    handleHashTag = (input) => {
+        let currentTag = input.substring(input.lastIndexOf('#') + 1, input.length)
+        console.log(currentTag)
+        this.handleAutoSuggestion(this.props.userAllTag, currentTag)
+    }
+
     handleAutoSuggestion = (tagArray, input) => {
-        let suggestion = tagArray.filter(i=>i.tag.startsWith(input))
+        let suggestion;
+        if (input === "") {
+            suggestion = [];
+        } else {
+            suggestion = tagArray.filter(i => i.tag.startsWith(input)).map(ele => ele.tag);
+        }
         console.log(suggestion)
+        this.setState({ suggestion }, () => { console.log(this.state.suggestion) })
     }
 
     render() {
@@ -43,8 +64,16 @@ class PlusIcon extends Component {
                     placeholder={this.state.placeholder}
                     name="newTag"
                     onChange={this.handleInputChange}
+                    // onKeyDown={this.onKeyDownHashTag}
                     value={this.state.newTag}>
                 </input>
+                <div className="suggestion">
+                        {this.state.suggestion.map((ele, index) =>
+                            <div key={index} onClick={() => this.handleSuggestionClick(ele)}>
+                                {ele}
+                            </div>
+                        )}
+                    </div>
 
                 <input
                     className="btn btn-md btn-default m-0 px-3"
