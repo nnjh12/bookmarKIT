@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DropDown from "./DropDown";
 
 class PlusIcon extends Component {
     constructor(props) {
@@ -6,6 +7,7 @@ class PlusIcon extends Component {
         this.state = {
             newTag: "",
             suggestion: [],
+            suggestionSelectIndex: -1,
             placeholder: "Add new tags here."
         };
     }
@@ -25,7 +27,7 @@ class PlusIcon extends Component {
         console.log(filtered)
 
         this.props.callback(this.props.callBackId, filtered)
-        this.setState({ newTag: "" });
+        this.setState({ newTag: "", suggestion:[], suggestionSelectIndex: -1 });
     }
 
     // onKeyDownHashTag = (event) => {
@@ -55,25 +57,76 @@ class PlusIcon extends Component {
         this.setState({ suggestion }, () => { console.log(this.state.suggestion) })
     }
 
+    handleSuggestionClick = (clicked) => {
+        let updatedTag = this.state.newTag.substring(0, this.state.newTag.lastIndexOf('#')) + "#" + clicked
+        this.setState({ newTag: updatedTag, suggestion: [], suggestionSelectIndex: -1 }, () => console.log(this.state))
+        document.getElementById(this.props.inputId).focus();
+    }
+
+    handleKeyDown(e) {
+        console.log(e.keyCode)
+        let index = this.state.suggestionSelectIndex;
+        let suggestion = this.state.suggestion
+        console.log(index)
+        switch (e.keyCode) {
+            case 40:
+                e.preventDefault();
+                console.log('case40')
+                if (index > suggestion.length - 2) {
+                    index = 0;
+                } else {
+                    index++;
+                }
+                console.log(suggestion[index])
+                this.setState({ suggestionSelectIndex: index })
+
+                break;
+            case 38:
+                e.preventDefault();
+                console.log('case38')
+                if (index < 1) {
+                    index = suggestion.length - 1;
+                } else {
+                    index--;
+                }
+                console.log(suggestion[index])
+                this.setState({ suggestionSelectIndex: index })
+
+                break;
+            case 13:
+                e.preventDefault();
+                console.log('case13')
+                if (this.state.suggestionSelectIndex === -1) {
+                    this.onSubmit()
+                } else {
+                    this.handleSuggestionClick(suggestion[index])
+                }
+                break;
+        }
+    }
+
     render() {
         return (
-            <form>
+            <form autoComplete="off">
                 <input
                     type="text"
                     className="form-control"
+                    id={this.props.inputId}
                     placeholder={this.state.placeholder}
                     name="newTag"
                     onChange={this.handleInputChange}
-                    // onKeyDown={this.onKeyDownHashTag}
+                    onKeyDown={this.handleKeyDown.bind(this)}
                     value={this.state.newTag}>
                 </input>
                 <div className="suggestion">
+                    <ul id="suggestionList">
                         {this.state.suggestion.map((ele, index) =>
-                            <div key={index} onClick={() => this.handleSuggestionClick(ele)}>
+                            <li key={index} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index? "active" : ""}>
                                 {ele}
-                            </div>
+                            </li>
                         )}
-                    </div>
+                    </ul>
+                </div>
 
                 <input
                     className="btn btn-md btn-default m-0 px-3"
