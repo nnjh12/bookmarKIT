@@ -32,7 +32,7 @@ class App extends Component {
     try {
       const allNote = await API.getAllNote();
       const allTag = await API.getAllTag();
-      
+
       this.setState({ allNote: allNote.data, allTag: allTag.data }, () => {
         console.log(this.state)
         this.handleFilter(this.state.search1, this.state.search2)
@@ -210,7 +210,15 @@ class App extends Component {
 
             </div>
 
-            <AddTag callBackId={ele._id} callback={this.addTag} allTag={ele.tag} userAllTag={this.state.allTag}></AddTag>
+            <PlusIcon
+              inputId={`input${ele._id}`}
+              callBackId={ele._id}
+              callback={this.addTag}
+              allTag={ele.tag}
+              userAllTag={this.state.allTag}>
+            </PlusIcon>
+
+            {/* <AddTag callBackId={ele._id} callback={this.addTag} allTag={ele.tag} userAllTag={this.state.allTag}></AddTag> */}
           </div>
         ))}
 

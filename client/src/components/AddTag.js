@@ -16,16 +16,21 @@ class AddTag extends Component {
         const { name, value } = event.target;
         this.setState({
             [name]: value
-        }, () => { this.handleAutoSuggestion(this.props.userAllTag, this.state.newTag) });
+        }, () => {
+            console.log(this.state.newTag)
+            this.handleAutoSuggestion(this.props.userAllTag, this.state.newTag)
+        });
     };
 
     onKeyDown = (event) => {
-        if (event.key === "Tab") {
+        if (event.key === "#") {
             event.preventDefault();
-            let newTagList = [...this.state.newTagList, event.target.value.toLowerCase()]
-            this.setState({ newTag: "", newTagList: newTagList, suggestion: [] })
+            this.handleAutoSuggestion(this.props.userAllTag, this.state.newTag)
+            // let newTagList = [...this.state.newTagList, event.target.value.toLowerCase()]
+            // this.setState({ newTag: "", newTagList: newTagList, suggestion: [] })
         }
     }
+
 
     handleAutoSuggestion = (tagArray, input) => {
         let suggestion;
@@ -64,15 +69,12 @@ class AddTag extends Component {
                 <div className="tagList">
                     {this.state.newTagList.map((ele, index) =>
                         <div key={index}>
-                            <div className="closeButton" onClick={() => this.removeTag(index)}>
-                                <i className="fas fa-times"></i>
-                            </div>
                             <span style={{ color: this.props.allTag.includes(ele) ? "red" : "black" }}>#{ele}</span>
                         </div>
                     )}
                 </div>
-                <div className="clearFloat" style={{ clear: "both" }}></div>
                 <form>
+                    {/* <span class="input-group-addon">#</span> */}
                     <input
                         type="text"
                         // className="form-control"

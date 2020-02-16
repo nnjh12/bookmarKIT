@@ -19,8 +19,12 @@
 }
 
 /* Add Tag Style */
+.tagInputContainer {
+  border: 1px solid green;
+
+}
+
 .tagInputContainer .tagList > div{
-  background-color:green;
   /* display: inline-block; */
   float: left;
   margin-right: 10px;
@@ -40,6 +44,14 @@
 
 .tagInputContainer form input[type="text"] {
   padding-right: 80px;
+  border: none;
+  background-color:transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+.tagInputContainer form input[type="text"]:focus {
+  outline:none !important;
 }
 .tagInputContainer form input[type="submit"] {
   position: absolute;
@@ -54,6 +66,10 @@
 
 .tagInputContainer .suggestion > div:hover {
   background-color: green;
+}
+
+.active {
+  background-color: yellow;
 }
 
 @keyframes App-logo-spin {
