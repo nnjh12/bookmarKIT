@@ -31,9 +31,9 @@ class SearchBar extends Component {
     render() {
         return (
             <div>
-                <div>
-                    <i className="fas fa-search" aria-hidden="true"></i>
-                    <input className="form-control form-control-sm ml-3" type="text" placeholder="Search"
+                <div className="searchBox">
+                    <i className="fas fa-search searchIcon" aria-hidden="true"></i>
+                    <input className="searchInput" type="text" placeholder="Search"
                         aria-label="Search" name="search1" onChange={this.handleInputChange} value={this.state.search1}></input>
                 </div>
 

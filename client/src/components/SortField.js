@@ -30,13 +30,13 @@ class SortField extends Component {
         return (
             <div>
                 <SortButton
-                    sortField="alphabet"
-                    arrow={this.state.activeSortField === "alphabet" ? (this.state.ascending ? <i className='fas fa-angle-up'></i> : <i className='fas fa-angle-down'></i>) : ""}
+                    sortField="A-Z"
+                    arrow={this.state.activeSortField === "alphabet" ? (this.state.ascending ? <i class="fas fa-sort-alpha-down"></i> : <i class="fas fa-sort-alpha-down-alt"></i>) : ""}
                     // ascending={this.state.activeSortField === "alphabet" ? this.state.ascending : true}
                     onClick={() => this.onClick("alphabet")}>
                 </SortButton>
                 <SortButton
-                    sortField="date"
+                    sortField="DATE"
                     arrow={this.state.activeSortField === "date" ? (this.state.ascending ? <i className='fas fa-angle-up'></i> : <i className='fas fa-angle-down'></i>) : ""}
                     // ascending={this.state.activeSortField === "alphabet" ? this.state.ascending : true}
                     onClick={() => this.onClick("date")}>

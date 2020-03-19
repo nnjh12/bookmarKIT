@@ -18,6 +18,24 @@
   font-size: large;
 }
 
+/* Search Box */
+.searchBox {
+  border-bottom: 1px solid #9facdb;
+  max-width: 80%;
+  float: left;
+}
+
+.searchIcon {
+  color: #9facdb;
+  text-align: center;
+  padding: 5px;
+}
+
+.searchInput {
+  outline: none;
+  border: none;
+}
+
 /* Add Tag Style */
 .tagInputContainer {
   border: 1px solid green;
