@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import TagInput from "./TagInput";
 
 class InputNote extends Component {
     constructor(props) {
@@ -22,15 +23,15 @@ class InputNote extends Component {
         });
     };
 
-    onSubmit = (event) => {
-        event.preventDefault()
-        const tagArray = this.state.tagUserInput.split("#").map(item => item.trim());
-        const filtered = tagArray.filter(item => item);
+    onSubmit = (newTag) => {
+        // event.preventDefault()
+        // const tagArray = this.state.tagUserInput.split("#").map(item => item.trim());
+        // const filtered = tagArray.filter(item => item);
 
         const newNote = {
             bookmark: this.state.bookmarkUserInput,
             keyword: this.state.keywordUserInput,
-            tag: filtered
+            tag: newTag
         }
         this.props.onClick(newNote)
         this.setState({
@@ -40,11 +41,11 @@ class InputNote extends Component {
         });
     }
 
-    
+
 
     render() {
         return (
-            <form>
+            <form autoComplete="off">
                 <label htmlFor="bookmark">Note</label>
                 <textarea
                     id="bookmark"
@@ -66,7 +67,7 @@ class InputNote extends Component {
                     placeholder={this.state.placeholder.keyword}>
                 </input>
                 <label htmlFor="tag">Tag</label>
-                <input
+                {/* <input
                     type="text"
                     id="tag"
                     name="tagUserInput"
@@ -74,15 +75,15 @@ class InputNote extends Component {
                     onChange={this.handleInputChange}
                     value={this.state.tagUserInput}
                     placeholder={this.state.placeholder.tag}>
-                </input>
+                </input> */}
+                <TagInput 
+                    inputId="tag"
+                    userAllTag={this.props.userAllTag}
+                    callback={this.onSubmit}
+                    disabled={this.state.bookmarkUserInput}>
+                </TagInput>
 
-                <div className="tags-input" data-name="tags-input">
-                    {/* <span className="tag">CSS<span className="close"></span></span>
-                    <span className="tag">JavaScript<span className="close"></span></span>
-                    <span className="tag">HTML<span className="close"></span></span> */}
-                </div>
-
-                <input type="submit" value="Save" disabled={this.state.bookmarkUserInput ? false : true} onClick={this.onSubmit}></input>
+                {/* <input type="submit" value="Save" disabled={this.state.bookmarkUserInput ? false : true} onClick={this.onSubmit}></input> */}
 
                 {/* <TextInput name="newNote" row="5" onChange={this.handleInputChange} value={this.state.newNote} placeholder={this.state.placeholder.note}>Note</TextInput>
                 <TextInput name="newTag" row="2" onChange={this.handleInputChange} value={this.state.newTag} placeholder={this.state.placeholder.tag}>Tag</TextInput>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class PlusIcon extends Component {
+class TagInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,25 +19,15 @@ class PlusIcon extends Component {
     };
 
     onSubmit = () => {
-        console.log("tags add button clicked")
+        console.log("Note add button clicked")
         console.log(this.state.newTag)
         const tagArray = this.state.newTag.split("#").map(item => item.trim());
         const filtered = tagArray.filter(item => item);
         console.log(filtered)
 
-        this.props.callback(this.props.callBackId, filtered)
+        this.props.callback(filtered)
         this.setState({ newTag: "", suggestion:[], suggestionSelectIndex: -1 });
     }
-
-    // onKeyDownHashTag = (event) => {
-    //     if (event.key === "#") {
-    //         console.log(event.target.value)
-    //         event.preventDefault();
-    //         // this.handleAutoSuggestion(this.props.userAllTag, this.state.newTag)
-    //         // let newTagList = [...this.state.newTagList, event.target.value.toLowerCase()]
-    //         // this.setState({ newTag: "", newTagList: newTagList, suggestion: [] })
-    //     }
-    // }
 
     handleHashTag = (input) => {
         let currentTag = input.substring(input.lastIndexOf('#') + 1, input.length)
@@ -104,9 +94,13 @@ class PlusIcon extends Component {
         }
     }
 
+    sendDataToParent = () => {
+        this.props.callBack(this.state.newTag)
+    }
+
     render() {
         return (
-            <form autoComplete="off">
+            <div>
                 <input
                     type="text"
                     className="form-control"
@@ -120,23 +114,22 @@ class PlusIcon extends Component {
                 <div className="suggestion">
                     <ul id="suggestionList">
                         {this.state.suggestion.map((ele, index) =>
-                            <li key={index} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index? "active" : ""}>
+                            <li key={index} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index ? "active" : ""}>
                                 {ele}
                             </li>
                         )}
                     </ul>
                 </div>
-
                 <input
                     className="btn btn-md btn-default m-0 px-3"
                     type="submit"
                     value="Add"
-                    disabled={this.state.newTag ? false : true}
+                    disabled={this.props.disabled ? false : true}
                     onClick={this.onSubmit}>
                 </input>
-            </form>
+            </div>
         );
     }
 }
 
-export default PlusIcon;
+export default TagInput;
