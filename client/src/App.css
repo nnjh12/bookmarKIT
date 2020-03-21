@@ -98,6 +98,7 @@
 /* Tag List Field */
 .tagListButton {
   font-size: 14px;
+  text-align: justify;
   padding: 5px 12px;
   margin-bottom: 5px;
   background-color: #ffffff;
@@ -111,6 +112,22 @@
   word-wrap: break-word
 }
 .tagListButton:focus {
+  outline: none;
+}
+/* Tag Button */
+.tagButton {
+  font-size: 12px;
+  padding: 5px 12px;
+  margin-right: 5px;
+  background: none;
+  border-radius: 5px;
+  border:1px #212529 solid;
+  outline: none;
+  transition-duration: 0.4s;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.tagButton:focus {
   outline: none;
 }
 
