@@ -18,22 +18,100 @@
   font-size: large;
 }
 
-/* Search Box */
-.searchBox {
-  border-bottom: 1px solid #9facdb;
-  max-width: 80%;
-  float: left;
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+/* Logo Field */
+.logoField {
+  margin: auto;
+  text-align: center;
+  font-size: 20px;
+  color: #114c84;
+  margin: 10px 0px;
 }
 
+/* Search Field */
+.searchField {
+  float: left;
+  width: 80%;
+  margin: 10px 0px;
+}
+/* .searchField:after { 
+    content: " "; 
+    display: block;
+    clear: both;
+}  */
+.searchBox {
+  border-bottom: 1px solid #9facdb;
+  float: left;
+  width: 100%;
+}
 .searchIcon {
   color: #9facdb;
   text-align: center;
   padding: 5px;
 }
-
 .searchInput {
   outline: none;
   border: none;
+  width: 95%;
+}
+.searchInput::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #9facdb;
+  opacity: 1; /* Firefox */
+}
+.searchInput:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #9facdb;
+}
+.searchInput::-ms-input-placeholder { /* Microsoft Edge */
+  color: #9facdb;
+}
+
+/* Sort Field */
+.sortField {
+  float: right;
+  margin: 10px 0px;
+
+}
+.sortButton {
+  width: 70px;
+  color: #114c84;
+  background-color: white;
+  border-radius: 8px;
+  border:none;
+  outline: none;
+  transition-duration: 0.4s;
+}
+
+.sortButton:hover {
+  color: #ffffff;
+  background-color: #114c84;
+  border-radius: 8px;
+  border:none;
+  transition-duration: 0.4s;
+}
+
+.sortButton:focus {
+  outline: none;
+}
+
+/* Tag List Field */
+.tagListButton {
+  font-size: 14px;
+  padding: 5px 12px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border:1px #212529 solid;
+  outline: none;
+  transition-duration: 0.4s;
+  text-transform: uppercase;
+  display: block;
+  max-width: 100%;
+  word-wrap: break-word
+}
+.tagListButton:focus {
+  outline: none;
 }
 
 /* Add Tag Style */

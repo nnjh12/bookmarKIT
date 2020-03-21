@@ -26,9 +26,11 @@ class TagList extends Component {
             <div>
                 {this.props.allTag.sort().map((tagEle, index) => (
                     <button
-                        className={this.state.search2.includes(tagEle.tag) ? "btn active" : "btn"}
+                        className={this.state.search2.includes(tagEle.tag) ? "tagListButton active" : "tagListButton"}
                         style={{
-                            backgroundColor: this.state.search2.includes(tagEle.tag) ? "#ffbb33" : "",
+                            backgroundColor: this.state.search2.includes(tagEle.tag) ? "#f96738" : "",
+                            color: this.state.search2.includes(tagEle.tag) ? "#ffffff" : "",
+                            borderColor: this.state.search2.includes(tagEle.tag) ? "#f96738" : "",
                             opacity: this.props.filteredTag.includes(tagEle.tag) ? "1" : "0.5"
                         }}
                         key={index}

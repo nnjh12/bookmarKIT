@@ -3,6 +3,7 @@ import "./App.css";
 import API from "./utils/api";
 
 import { Col, Row, Container } from "./components/Grid";
+import Logo from "./components/Logo"
 import InputNote from "./components/InputNote";
 import SearchBar from "./components/SearchBar";
 import TagList from "./components/TagList"
@@ -191,7 +192,9 @@ class App extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-2">FAVOBOT</Col>
+          <Col size="md-2">
+            <Logo></Logo>
+          </Col>
           <Col size="md-10">
             <SearchBar
               sendSearch1={this.recieveSearch1}
