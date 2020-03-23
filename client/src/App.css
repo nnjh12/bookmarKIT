@@ -71,7 +71,6 @@
 .sortField {
   float: right;
   margin: 10px 0px;
-
 }
 .sortButton {
   width: 70px;
@@ -82,7 +81,6 @@
   outline: none;
   transition-duration: 0.4s;
 }
-
 .sortButton:hover {
   color: #ffffff;
   background-color: #114c84;
@@ -90,7 +88,6 @@
   border:none;
   transition-duration: 0.4s;
 }
-
 .sortButton:focus {
   outline: none;
 }
@@ -130,6 +127,47 @@
 .tagButton:focus {
   outline: none;
 }
+
+/* Note Field */
+.viewNoteContainer {
+  background-color: #fbf8ee;
+  margin-bottom: 10px;
+  position: relative;
+  border-radius: 10px;
+}
+.viewNoteContainer > .colorPanel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 100%;
+  background-color: #114c84;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+
+}
+.viewNoteContainer > .contentPanel {
+  margin-left: 10px;
+  padding: 10px 15px;
+}
+.viewNoteContainer .keyWord {
+  font-size: 16px;
+  margin: 0px;
+ }
+.viewNoteContainer .keyWord {
+  font-size: 16px;
+  margin: 0px;
+ }
+.viewNoteContainer .date {
+ font-size: 14px;
+ margin-bottom: 0px;
+}
+
+
+
+
+
+
 
 /* Add Tag Style */
 .tagInputContainer {

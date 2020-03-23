@@ -3,7 +3,7 @@ import React from 'react'
 const DeleteIcon = (props) => {
     return (
         <div className="deleteButton" onClick={props.deleteOnClick} data-value={props.dataValue}>
-            <a href="#" style={{ color: props.fontColor }}><i className="fas fa-times"></i></a>
+            <a><i class="far fa-trash-alt"></i></a>
         </div>
     );
 }

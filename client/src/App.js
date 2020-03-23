@@ -6,8 +6,9 @@ import { Col, Row, Container } from "./components/Grid";
 import Logo from "./components/Logo"
 import InputNote from "./components/InputNote";
 import SearchBar from "./components/SearchBar";
-import TagList from "./components/TagList"
+import TagList from "./components/TagList";
 import ViewNote from "./components/ViewNote";
+import NoteContainer from "./components/NoteContainer";
 import TagButton from "./components/TagButton";
 import PlusIcon from "./components/PlusIcon";
 import SortField from "./components/SortField";
@@ -215,17 +216,18 @@ class App extends Component {
           </Col>
           <Col size="md-10">
             {this.state.filteredNote.map((ele, index) => (
-              <div className="viewNoteContainer mb-4 p-4" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
-                <ViewNote
+              // <div className="viewNoteContainer" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
+              <ViewNote key={index} deleteOnClick={() => this.deleteNote(ele._id)}>
+                <NoteContainer
                   key={ele._id}
                   bookmark={ele.bookmark}
                   keyword={ele.keyword}
                   highlight={this.state.search1}
                   date={ele.date}
                   deleteOnClick={() => this.deleteNote(ele._id)}
-                ></ViewNote>
+                ></NoteContainer>
 
-                <div className="tagContainer mb-3">
+                <div className="tagContainer">
                   {ele.tag.sort().map((tagEle, index) => (
                     <TagButton
                       key={index}
@@ -245,8 +247,8 @@ class App extends Component {
                   allTag={ele.tag}
                   userAllTag={this.state.allTag}>
                 </PlusIcon>
+                </ViewNote>
 
-              </div>
             ))}
           </Col>
         </Row>
