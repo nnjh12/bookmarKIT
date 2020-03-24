@@ -112,9 +112,12 @@
   outline: none;
 }
 /* Tag Button */
+.tagContainer {
+  margin-top: 5px;
+}
 .tagButton {
   font-size: 12px;
-  padding: 5px 12px;
+  padding: 3px 10px;
   margin-right: 5px;
   background: none;
   border-radius: 5px;
@@ -159,8 +162,15 @@
   margin: 0px;
  }
 .viewNoteContainer .date {
- font-size: 14px;
+ font-size: 12px;
  margin-bottom: 0px;
+}
+.viewNoteContainer > .contentPanel > .iconPanel {
+  float: right;
+}
+.viewNoteContainer > .contentPanel > .iconPanel i {
+  color: #9facdb;
+  margin-left: 5px;
 }
 
 
