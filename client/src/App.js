@@ -13,6 +13,7 @@ import TagButton from "./components/TagButton";
 import SortField from "./components/SortField";
 
 import AddTag from "./components/AddTag";
+import AddTagInput from "./components/AddTagInput";
 
 class App extends Component {
 
@@ -237,7 +238,13 @@ class App extends Component {
                       highlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
                       deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
                     </TagButton>))}
-                    <AddTag></AddTag>
+                  <AddTag
+                    inputId={`input${ele._id}`}
+                    callBackId={ele._id}
+                    callback={this.addTag}
+                    allTag={ele.tag}
+                    userAllTag={this.state.allTag}>
+                  </AddTag>
 
 
                   <div style={{ clear: 'both' }}></div>
@@ -245,13 +252,13 @@ class App extends Component {
 
                 </div>
 
-                {/* <PlusIcon
+                {/* <AddTagInput
                   inputId={`input${ele._id}`}
                   callBackId={ele._id}
                   callback={this.addTag}
                   allTag={ele.tag}
                   userAllTag={this.state.allTag}>
-                </PlusIcon> */}
+                </AddTagInput> */}
               </ViewNote>
 
             ))}

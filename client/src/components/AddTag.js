@@ -10,12 +10,21 @@ class AddTag extends Component {
         };
     }
     handleActive = () => {
-        this.setState({ active: true })
+        let active = !this.state.active
+        this.setState({ active })
     };
     render() {
         return (
             <span className="addTag">
-                {this.state.active ? <div><PlusIcon plusOnClick={this.handleActive}></PlusIcon><AddTagInput></AddTagInput></div> : <PlusIcon plusOnClick={this.handleActive}></PlusIcon>}
+                <PlusIcon active={this.state.active} plusOnClick={this.handleActive}></PlusIcon>
+                {this.state.active &&
+                    <AddTagInput
+                        inputId={this.props.inputId}
+                        callBackId={this.props.callBackId}
+                        callback={this.props.callback}
+                        allTag={this.props.allTag}
+                        userAllTag={this.props.userAllTag}>
+                    </AddTagInput>}
             </span>
 
         );
