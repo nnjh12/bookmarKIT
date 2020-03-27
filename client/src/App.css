@@ -114,11 +114,14 @@
 /* Tag Button */
 .tagContainer {
   margin-top: 5px;
+  float: left;
 }
 .tagButton {
   font-size: 12px;
   padding: 3px 10px;
   margin-right: 5px;
+  margin-bottom: 3px;
+
   background: none;
   border-radius: 5px;
   border:1px #212529 solid;
@@ -147,7 +150,6 @@
   background-color: #114c84;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-
 }
 .viewNoteContainer > .contentPanel {
   margin-left: 10px;
@@ -173,6 +175,22 @@
   margin-left: 5px;
 }
 
+/* Add Tag */
+.addTagContainer{
+  display: inline-block;
+}
+.addTagContainer form {
+  display: inline-block;
+}
+.addTagContainer input[type="text"] {
+  width: 200px;
+  padding-right: 50px;
+}
+.addTagContainer input[type="submit"] {
+  margin-left: -50px;
+  width: 50px;
+}
+
 
 
 
@@ -181,7 +199,7 @@
 
 /* Add Tag Style */
 .tagInputContainer {
-  border: 1px solid green;
+  border: 1px solid red;
 
 }
 

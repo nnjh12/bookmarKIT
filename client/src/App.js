@@ -13,7 +13,6 @@ import TagButton from "./components/TagButton";
 import SortField from "./components/SortField";
 
 import AddTag from "./components/AddTag";
-import AddTagInput from "./components/AddTagInput";
 
 class App extends Component {
 
@@ -245,12 +244,11 @@ class App extends Component {
                     allTag={ele.tag}
                     userAllTag={this.state.allTag}>
                   </AddTag>
-
-
-                  <div style={{ clear: 'both' }}></div>
-
-
                 </div>
+                <div style={{ clear: 'both' }}></div>
+
+
+
 
                 {/* <AddTagInput
                   inputId={`input${ele._id}`}
