@@ -114,7 +114,9 @@ class AddTag extends Component {
     render() {
         return (
             <div className="addTagContainer">
-                <PlusIcon active={this.state.active} plusOnClick={this.handleActive}></PlusIcon>
+                {/* <div className="plusIconContainer"> */}
+                    <PlusIcon active={this.state.active} plusOnClick={this.handleActive}></PlusIcon>
+                {/* </div> */}
                 {this.state.active &&
                     <form autoComplete="off">
                         <input className="addTagInput"
@@ -128,11 +130,11 @@ class AddTag extends Component {
                         </input>
                         <input
                             type="submit"
-                            value="Add"
+                            value=""
                             disabled={this.state.newTag ? false : true}
                             onClick={this.onSubmit}>
                         </input>
-                        <div className="suggestion">
+                        {/* <div className="suggestion">
                             <ul id="suggestionList">
                                 {this.state.suggestion.map((ele, index) =>
                                     <li key={index} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index ? "active" : ""}>
@@ -140,7 +142,7 @@ class AddTag extends Component {
                                     </li>
                                 )}
                             </ul>
-                        </div>
+                        </div> */}
 
                     </form>
                 }

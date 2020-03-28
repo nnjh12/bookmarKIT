@@ -179,16 +179,36 @@
 .addTagContainer{
   display: inline-block;
 }
+.plusIcon {
+  display: inline-block;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+.plusIcon i {
+  vertical-align: middle;
+}
 .addTagContainer form {
   display: inline-block;
+  vertical-align: middle;
+  height: 24.6px;
 }
 .addTagContainer input[type="text"] {
-  width: 200px;
+  width: 400px;
+  font-size: 14px;
+  padding-left: 5px;
   padding-right: 50px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border: none;
+  vertical-align: middle;
 }
 .addTagContainer input[type="submit"] {
   margin-left: -50px;
+  font-size: 14px;
   width: 50px;
+  border: none;
+
+
 }
 
 
