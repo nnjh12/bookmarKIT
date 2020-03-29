@@ -42,12 +42,12 @@
     clear: both;
 }  */
 .searchBox {
-  border-bottom: 1px solid #9facdb;
+  border-bottom: 1px solid #AAAAAA;
   float: left;
   width: 100%;
 }
 .searchIcon {
-  color: #9facdb;
+  color: #AAAAAA;
   text-align: center;
   padding: 5px;
 }
@@ -57,14 +57,14 @@
   width: 95%;
 }
 .searchInput::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #9facdb;
+  color: #AAAAAA;
   opacity: 1; /* Firefox */
 }
 .searchInput:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #9facdb;
+  color: #AAAAAA;
 }
 .searchInput::-ms-input-placeholder { /* Microsoft Edge */
-  color: #9facdb;
+  color: #AAAAAA;
 }
 
 /* Sort Field */
@@ -171,7 +171,7 @@
   float: right;
 }
 .viewNoteContainer > .contentPanel > .iconPanel i {
-  color: #9facdb;
+  color: #AAAAAA;
   margin-left: 5px;
 }
 
@@ -193,84 +193,53 @@
   height: 24.6px;
 }
 .addTagContainer input[type="text"] {
-  width: 400px;
+  min-width: 400px;
+  height: 100%;
   font-size: 14px;
   padding-left: 5px;
   padding-right: 50px;
-  padding-top: 2px;
-  padding-bottom: 2px;
   border: none;
   vertical-align: middle;
 }
+.addTagContainer input[type="text"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #AAAAAA;
+  opacity: 1; /* Firefox */
+}
+.addTagContainer input[type="text"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #AAAAAA;
+}
+.addTagContainer input[type="text"]::-ms-input-placeholder { /* Microsoft Edge */
+  color: #AAAAAA;
+}
 .addTagContainer input[type="submit"] {
+  height: 100%;
   margin-left: -50px;
   font-size: 14px;
   width: 50px;
   border: none;
-
-
+  vertical-align: middle;
 }
-
-
-
-
-
-
-
-/* Add Tag Style */
-.tagInputContainer {
-  border: 1px solid red;
-
+.addTagContainer input:focus {
+  outline: none;
 }
-
-.tagInputContainer .tagList > div{
-  /* display: inline-block; */
-  float: left;
-  margin-right: 10px;
-  padding: 2px;
-}
-
-.tagInputContainer .tagList .closeButton {
-  float: right;
-  margin-left: 10px;
-}
-
-.tagInputContainer form {
-  display: inline-block;
+.addTagContainer ul {
+  list-style-type: none;
   position: relative;
-  clear: both;
+  z-index: 100;
+  font-size: 14px;
+  padding: 0px 5px;
+  padding-right: 50px;
+  margin: 0px;
 }
-
-.tagInputContainer form input[type="text"] {
-  padding-right: 80px;
-  border: none;
-  background-color:transparent;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+.addTagContainer li {
+  border-top: 1px solid #f0f0f0;
 }
-.tagInputContainer form input[type="text"]:focus {
-  outline:none !important;
+.addTagContainer .inactive {
+  background-color: #ffffff;
 }
-.tagInputContainer form input[type="submit"] {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 80px;
+.addTagContainer .active {
+  background-color: #f0f0f0
 }
-
-.tagInputContainer .suggestion > div {
-  background-color: white;
-}
-
-.tagInputContainer .suggestion > div:hover {
-  background-color: green;
-}
-
-.active {
-  background-color: yellow;
-}
-
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

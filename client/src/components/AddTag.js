@@ -16,7 +16,8 @@ class AddTag extends Component {
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
-            [name]: value
+            [name]: value,
+            suggestionSelectIndex: -1
         }, () => this.handleHashTag(this.state.newTag));
     };
 
@@ -115,7 +116,7 @@ class AddTag extends Component {
         return (
             <div className="addTagContainer">
                 {/* <div className="plusIconContainer"> */}
-                    <PlusIcon active={this.state.active} plusOnClick={this.handleActive}></PlusIcon>
+                <PlusIcon active={this.state.active} plusOnClick={this.handleActive}></PlusIcon>
                 {/* </div> */}
                 {this.state.active &&
                     <form autoComplete="off">
@@ -130,19 +131,19 @@ class AddTag extends Component {
                         </input>
                         <input
                             type="submit"
-                            value=""
+                            value="ADD"
                             disabled={this.state.newTag ? false : true}
                             onClick={this.onSubmit}>
                         </input>
-                        {/* <div className="suggestion">
+                        <div className="suggestion">
                             <ul id="suggestionList">
                                 {this.state.suggestion.map((ele, index) =>
-                                    <li key={index} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index ? "active" : ""}>
+                                    <li key={index} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index ? "active" : "inactive"}>
                                         {ele}
                                     </li>
                                 )}
                             </ul>
-                        </div> */}
+                        </div>
 
                     </form>
                 }

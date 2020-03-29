@@ -16,7 +16,7 @@ const Highlight = ({text = '', highlight = ''}) => {
     return (
       <span>
          {parts.filter(part => part).map((part, i) => (
-             regex.test(part) ? <mark key={i} style={{backgroundColor:"yellow", padding:"0"}}>{part}</mark> : <span key={i}>{part}</span>
+             regex.test(part) ? <mark key={i} style={{backgroundColor:"#FFCC33", padding:"0"}}>{part}</mark> : <span key={i}>{part}</span>
          ))}
      </span>
     )
