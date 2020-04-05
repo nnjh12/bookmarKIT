@@ -33,7 +33,7 @@
 /* Search Field */
 .searchField {
   float: left;
-  width: 80%;
+  width: 70%;
   margin: 10px 0px;
 }
 /* .searchField:after { 
@@ -68,29 +68,62 @@
 }
 
 /* Sort Field */
-.sortField {
+.menuIconContainer {
   float: right;
-  margin: 10px 0px;
 }
-.sortButton {
-  width: 70px;
+.sortField, .addNewField{
+  float: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+.menuButton {
   color: #114c84;
   background-color: white;
-  border-radius: 8px;
-  border:none;
+  border: 1px solid #114c84;
   outline: none;
   transition-duration: 0.4s;
+  font-size: 14px;
 }
-.sortButton:hover {
+.menuButton:hover {
   color: #ffffff;
   background-color: #114c84;
-  border-radius: 8px;
-  border:none;
+  border: 1px solid #114c84;
   transition-duration: 0.4s;
 }
-.sortButton:focus {
+.menuButton:focus {
   outline: none;
+  border: 1px solid #114c84;
 }
+.addNewButton {
+  border-radius: 8px;
+  background-color: #f95738;
+  border: 1px solid #f95738;
+  color: #ffffff;
+  padding: 3px 10px;
+}
+.addNewButton:hover {
+  color: #ffffff;
+  background-color: #ffcc33;
+  border: 1px solid #ffcc33;
+  transition-duration: 0.4s;
+}
+.addNewButton:focus {
+  outline: none;
+  border: 1px solid #ffcc33;
+}
+.sortField #alphabetSort {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-right: none;
+  padding: 3px 10px;
+}
+.sortField #dateSort {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 3px 10px;
+}
+
 
 /* Tag List Field */
 .tagListButton {

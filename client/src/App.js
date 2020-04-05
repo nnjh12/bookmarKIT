@@ -6,11 +6,12 @@ import { Col, Row, Container } from "./components/Grid";
 import Logo from "./components/Logo"
 import InputNote from "./components/InputNote";
 import SearchBar from "./components/SearchBar";
+import SortField from "./components/SortField";
+import AddBookmark from "./components/AddBookmark";
 import TagList from "./components/TagList";
 import ViewNote from "./components/ViewNote";
 import NoteContainer from "./components/NoteContainer";
 import TagButton from "./components/TagButton";
-import SortField from "./components/SortField";
 
 import AddTag from "./components/AddTag";
 
@@ -202,7 +203,10 @@ class App extends Component {
               sendSearch1={this.recieveSearch1}
               serach2={this.state.search2}>
             </SearchBar>
-            <SortField handleSort={this.sortNote}></SortField>
+            <div className="menuIconContainer">
+              <SortField handleSort={this.sortNote}></SortField>
+              <AddBookmark></AddBookmark>
+            </div>
           </Col>
         </Row>
 
