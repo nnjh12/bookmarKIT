@@ -205,7 +205,7 @@ class App extends Component {
             </SearchBar>
             <div className="menuIconContainer">
               <SortField handleSort={this.sortNote}></SortField>
-              <AddBookmark></AddBookmark>
+              <AddBookmark  onClick={this.postNote} userAllTag={this.state.allTag}></AddBookmark>
             </div>
           </Col>
         </Row>
@@ -267,7 +267,7 @@ class App extends Component {
           </Col>
         </Row>
 
-        <InputNote onClick={this.postNote} userAllTag={this.state.allTag}></InputNote>
+        {/* <InputNote onClick={this.postNote} userAllTag={this.state.allTag}></InputNote> */}
 
 
 

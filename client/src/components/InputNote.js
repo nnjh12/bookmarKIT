@@ -9,20 +9,18 @@ class InputNote extends Component {
             keywordUserInput: "",
             tagUserInput: "",
             placeholder: {
-                bookmark: "add your bookmark here.",
-                keyword: "Write your keyword here.",
+                bookmark: "Add your bookmark here.",
+                keyword: "Add your keyword here.",
                 tag: "#my tag #example #hello"
             }
         };
     }
-
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
             [name]: value
         });
     };
-
     onSubmit = (newTag) => {
         // event.preventDefault()
         // const tagArray = this.state.tagUserInput.split("#").map(item => item.trim());
@@ -40,33 +38,29 @@ class InputNote extends Component {
             tagUserInput: ""
         });
     }
-
-
-
     render() {
         return (
-            <form autoComplete="off">
-                <label htmlFor="bookmark">Note</label>
-                <textarea
+            <form className="addNewForm" autoComplete="off">
+                <h6>Add New Bookmark</h6>
+                <label htmlFor="bookmark">URL</label>
+                <input
+                    type="text"
                     id="bookmark"
                     name="bookmarkUserInput"
-                    rows="3"
-                    style={{ width: "100%" }}
                     onChange={this.handleInputChange}
                     value={this.state.bookmarkUserInput}
                     placeholder={this.state.placeholder.bookmark}>
-                </textarea>
-                <label htmlFor="keyword">keyword</label>
+                </input>
+                <label htmlFor="keyword">KEYWORD</label>
                 <input
                     type="text"
                     id="keyword"
                     name="keywordUserInput"
-                    style={{ width: "100%" }}
                     onChange={this.handleInputChange}
                     value={this.state.keywordUserInput}
                     placeholder={this.state.placeholder.keyword}>
                 </input>
-                <label htmlFor="tag">Tag</label>
+                <label htmlFor="tag">TAG</label>
                 {/* <input
                     type="text"
                     id="tag"
@@ -76,11 +70,12 @@ class InputNote extends Component {
                     value={this.state.tagUserInput}
                     placeholder={this.state.placeholder.tag}>
                 </input> */}
-                <TagInput 
+                <TagInput
                     inputId="tag"
                     userAllTag={this.props.userAllTag}
                     callback={this.onSubmit}
-                    disabled={this.state.bookmarkUserInput}>
+                    disabled={this.state.bookmarkUserInput}
+                    close={this.props.close}>
                 </TagInput>
 
                 {/* <input type="submit" value="Save" disabled={this.state.bookmarkUserInput ? false : true} onClick={this.onSubmit}></input> */}

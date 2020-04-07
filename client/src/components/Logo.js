@@ -3,7 +3,7 @@ import React from 'react'
 const Logo = (props) => {
     return (
         <div className="logoField">
-            FAVOBOT
+            bookmarKIT
         </div>
     );
 }

@@ -14,7 +14,8 @@ class TagInput extends Component {
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
-            [name]: value
+            [name]: value,
+            suggestionSelectIndex: -1
         }, () => this.handleHashTag(this.state.newTag));
     };
 
@@ -26,7 +27,7 @@ class TagInput extends Component {
         console.log(filtered)
 
         this.props.callback(filtered)
-        this.setState({ newTag: "", suggestion:[], suggestionSelectIndex: -1 });
+        this.setState({ newTag: "", suggestion: [], suggestionSelectIndex: -1 });
     }
 
     handleHashTag = (input) => {
@@ -103,7 +104,6 @@ class TagInput extends Component {
             <div>
                 <input
                     type="text"
-                    className="form-control"
                     id={this.props.inputId}
                     placeholder={this.state.placeholder}
                     name="newTag"
@@ -120,13 +120,17 @@ class TagInput extends Component {
                         )}
                     </ul>
                 </div>
-                <input
-                    className="btn btn-md btn-default m-0 px-3"
-                    type="submit"
-                    value="Add"
-                    disabled={this.props.disabled ? false : true}
-                    onClick={this.onSubmit}>
-                </input>
+
+                <div className="formButtonContainer">
+                    <input
+                        className="formButton"
+                        type="submit"
+                        value="ADD"
+                        disabled={this.props.disabled ? false : true}
+                        onClick={this.onSubmit}>
+                    </input>
+                    <button className="formButton" onClick={this.props.close}>CLOSE</button>
+                </div>
             </div>
         );
     }
