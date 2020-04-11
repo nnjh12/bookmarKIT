@@ -4,7 +4,6 @@ import API from "./utils/api";
 
 import { Col, Row, Container } from "./components/Grid";
 import Logo from "./components/Logo"
-import InputNote from "./components/InputNote";
 import SearchBar from "./components/SearchBar";
 import SortField from "./components/SortField";
 import AddBookmark from "./components/AddBookmark";
@@ -114,13 +113,6 @@ class App extends Component {
     this.setState({ filteredTag })
   };
 
-  // handleFilter = (search1, search2) => {
-  //   this.setState({ search1: search1, search2: search2 }, (filteredNote) => {
-  //     filteredNote = this.state.allNote.filter(ele => this.testByInput(ele, this.state.search1) && this.testByButton(ele, this.state.search2))
-  //     this.setState({ filteredNote }, () => this.filterTag(this.state.filteredNote))
-  //   })
-  // };
-
   handleFilter = (search1, search2) => {
     let filteredNote = this.state.allNote.filter(ele => this.testByInput(ele, search1) && this.testByButton(ele, search2))
     this.setState({ filteredNote }, () => this.filterTag(this.state.filteredNote))
@@ -205,11 +197,10 @@ class App extends Component {
             </SearchBar>
             <div className="menuIconContainer">
               <SortField handleSort={this.sortNote}></SortField>
-              <AddBookmark  onClick={this.postNote} userAllTag={this.state.allTag}></AddBookmark>
+              <AddBookmark handleSubmit={this.postNote} userAllTag={this.state.allTag}></AddBookmark>
             </div>
           </Col>
         </Row>
-
         <Row>
           <Col size="md-2">
             <TagList
@@ -221,7 +212,6 @@ class App extends Component {
           </Col>
           <Col size="md-10">
             {this.state.filteredNote.map((ele, index) => (
-              // <div className="viewNoteContainer" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
               <ViewNote key={index} deleteOnClick={() => this.deleteNote(ele._id)}>
                 <NoteContainer
                   key={ele._id}
@@ -231,7 +221,6 @@ class App extends Component {
                   date={ele.date}
                   deleteOnClick={() => this.deleteNote(ele._id)}
                 ></NoteContainer>
-
                 <div className="tagContainer">
                   {ele.tag.sort().map((tagEle, index) => (
                     <TagButton
@@ -250,31 +239,11 @@ class App extends Component {
                   </AddTag>
                 </div>
                 <div style={{ clear: 'both' }}></div>
-
-
-
-
-                {/* <AddTagInput
-                  inputId={`input${ele._id}`}
-                  callBackId={ele._id}
-                  callback={this.addTag}
-                  allTag={ele.tag}
-                  userAllTag={this.state.allTag}>
-                </AddTagInput> */}
               </ViewNote>
-
             ))}
           </Col>
         </Row>
-
-        {/* <InputNote onClick={this.postNote} userAllTag={this.state.allTag}></InputNote> */}
-
-
-
-
-
       </Container>
-
     );
   }
 }

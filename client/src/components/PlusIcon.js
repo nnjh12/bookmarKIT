@@ -2,8 +2,8 @@ import React from 'react'
 
 const PlusIcon = (props) => {
     return (
-        <span className="plusIcon" onClick={props.plusOnClick}>
-            {props.active ? <a><i class="fas fa-minus-circle"></i></a> : <a><i class="fas fa-plus-circle"></i></a>}
+        <span className="plusIcon iconButton" onClick={props.plusOnClick}>
+            {props.active ? <i className="fas fa-minus-circle"></i> : <i className="fas fa-plus-circle"></i>}
         </span>
     );
 }

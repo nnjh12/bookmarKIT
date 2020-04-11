@@ -2,8 +2,8 @@ import React from 'react'
 
 const EditIcon = (props) => {
     return (
-        <span className="editIcon" onClick={props.editOnClick}>
-            <a><i class="far fa-edit"></i></a>
+        <span className="editIcon iconButton" onClick={props.editOnClick}>
+            <i className="far fa-edit"></i>
         </span>
     );
 }

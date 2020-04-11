@@ -7,9 +7,11 @@ class InputNote extends Component {
         this.state = {
             bookmarkUserInput: "",
             keywordUserInput: "",
+            tagUserInput: "",
             placeholder: {
                 bookmark: "Add your bookmark here.",
                 keyword: "Add your keyword here.",
+                tag: "#example #new tag #addition "
             }
         };
     }
@@ -18,19 +20,26 @@ class InputNote extends Component {
         this.setState({
             [name]: value
         });
-    };
-    onSubmit = (newTag) => {
-        // event.preventDefault()
+    }
+    handleDataExchange = (childNewTag) => {
+        this.setState({ tagUserInput: childNewTag }, () => console.log(this.state.tagUserInput))
+    }
+    onSubmit = () => {
+        console.log("Bookmark Add button clicked")
+        const tagArray = this.state.tagUserInput.split("#").map(item => item.trim());
+        const filtered = tagArray.filter(item => item);
+
         const newNote = {
             bookmark: this.state.bookmarkUserInput,
             keyword: this.state.keywordUserInput,
-            tag: newTag
+            tag: filtered
         }
-        this.props.onClick(newNote)
+        this.props.handleSubmit(newNote)
         this.setState({
             bookmarkUserInput: "",
             keywordUserInput: "",
-        });
+            tagUserInput: ""
+        }, this.props.close);
     }
     render() {
         return (
@@ -56,12 +65,22 @@ class InputNote extends Component {
                 </input>
                 <label htmlFor="tag">TAG</label>
                 <TagInput
+                    placeholder={this.state.placeholder.tag}
                     inputId="tag"
                     userAllTag={this.props.userAllTag}
-                    callback={this.onSubmit}
-                    disabled={this.state.bookmarkUserInput}
-                    close={this.props.close}>
+                    handleDataExchange={this.handleDataExchange}
+                    onSubmit={this.onSubmit}>
                 </TagInput>
+                <div className="formButtonContainer">
+                    <input
+                        className="formButton"
+                        type="submit"
+                        value="ADD"
+                        disabled={this.state.bookmarkUserInput ? false : true}
+                        onClick={this.onSubmit}>
+                    </input>
+                    <button className="formButton" onClick={this.props.close}>CLOSE</button>
+                </div>
             </form>
         );
     }

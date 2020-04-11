@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Button from "./Button";
-import DeleteIcon from "./DeleteIcon";
 import Highlight from "./Highlight";
 
 

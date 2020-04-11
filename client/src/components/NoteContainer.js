@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import DeleteIcon from "./DeleteIcon";
 import Highlight from "./Highlight";
 
 var moment = require("moment");

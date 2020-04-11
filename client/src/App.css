@@ -29,7 +29,9 @@
   color: #114c84;
   margin: 10px 0px;
 }
-
+.iconButton {
+  cursor: pointer;
+}
 /* Search Field */
 .searchField {
   float: left;
@@ -191,6 +193,10 @@
 }
 .addNewForm li {
   border-top: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+.addNewForm li:hover {
+  background-color: #f0f0f0;
 }
 .addNewForm .inactive {
   background-color: #ffffff;
