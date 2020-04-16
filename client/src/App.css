@@ -73,7 +73,7 @@
 .menuIconContainer {
   float: right;
 }
-.sortField, .collapseField, .addNewField{
+.sortField, .collapseAllField, .addNewField{
   float: left;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -84,7 +84,7 @@
   transition-duration: 0.4s;
   font-size: 12px;
 }
-.addNewButton, .collapseButton {
+.addNewButton, .collapseAllButton {
   border-radius: 13px;
   background-color: #f95738;
   border: 1px solid #f95738;
@@ -100,17 +100,17 @@
 .addNewButton:focus {
   outline: none;
 }
-.sortButton, .collapseButton {
+.sortButton, .collapseAllButton {
   border: 1px solid #114c84;
   background-color: #ffffff;
   color: #114c84;
 }
-.sortButton:hover, .collapseButton:hover {
+.sortButton:hover, .collapseAllButton:hover {
   color: #ffffff;
   background-color: #114c84;
   transition-duration: 0.4s;
 }
-.sortButton:focus, .collapseButton:focus {
+.sortButton:focus, .collapseAllButton:focus {
   outline: none;
 }
 .sortField #alphabetSort {
@@ -124,7 +124,7 @@
   border-bottom-right-radius: 13px;
   padding: 3px 10px;
 }
-.collapseButton {
+.collapseAllButton {
   width: 87px;
 }
 

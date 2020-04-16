@@ -1,30 +1,30 @@
 import React, { Component } from "react";
 
-class CollapseButton extends Component {
+class CollapseAllButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapse: false
+            collapseAll: false
         };
     }
-    handleCollapse = () => {
-        let collapse = !this.state.collapse
-        this.setState({ collapse }, () => this.sendCollapse(this.state.collapse))
+    handleCollapseAll = () => {
+        let collapseAll = !this.state.collapseAll
+        this.setState({ collapseAll }, () => this.sendCollapseAll(this.state.collapseAll))
     }
-    sendCollapse = (collapse) => {
-        this.props.sendCollapse(collapse)
+    sendCollapseAll = (collapseAll) => {
+        this.props.sendCollapseAll(collapseAll)
     }
     render() {
         return (
-            <div className="collapseField">
+            <div className="collapseAllField">
                 <button
-                    className="menuButton collapseButton"
-                    onClick={this.handleCollapse}>
-                    <span>{this.state.collapse ? "EXPAND" : "COLLAPSE"}</span>
+                    className="menuButton collapseAllButton"
+                    onClick={this.handleCollapseAll}>
+                    <span>{this.state.collapseAll ? "EXPAND" : "COLLAPSE"}</span>
                 </button>
             </div>
         );
     }
 }
 
-export default CollapseButton;
+export default CollapseAllButton;

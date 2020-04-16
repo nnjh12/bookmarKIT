@@ -26,7 +26,7 @@ class App extends Component {
       filteredTag: [],
       search1: "",
       search2: [],
-      collapse: false
+      collapseAll: false
     };
   }
 
@@ -128,8 +128,8 @@ class App extends Component {
     this.setState({ search2 }, () => this.handleFilter(this.state.search1, this.state.search2))
   }
 
-  recieveCollapse = (collapse) => {
-    this.setState({collapse})
+  recieveCollapseAll = (collapseAll) => {
+    this.setState({ collapseAll })
   }
 
   sortNote = (sortField, ascending) => {
@@ -203,7 +203,7 @@ class App extends Component {
             </SearchBar>
             <div className="menuIconContainer">
               <SortField handleSort={this.sortNote}></SortField>
-              <CollapseButton sendCollapse={this.recieveCollapse}></CollapseButton>
+              <CollapseButton sendCollapseAll={this.recieveCollapseAll}></CollapseButton>
               <AddBookmark handleSubmit={this.postNote} userAllTag={this.state.allTag}></AddBookmark>
             </div>
           </Col>
@@ -227,9 +227,9 @@ class App extends Component {
                   highlight={this.state.search1}
                   date={ele.date}
                   deleteOnClick={() => this.deleteNote(ele._id)}
-                  collapse={this.state.collapse}
+                  collapseAll={this.state.collapseAll}
                 ></NoteContainer>
-                {!this.state.collapse &&
+                {!this.state.collapseAll &&
                   <div className="tagContainer">
                     {ele.tag.sort().map((tagEle, index) => (
                       <TagButton
