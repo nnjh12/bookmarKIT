@@ -5,6 +5,7 @@ import API from "./utils/api";
 import { Col, Row, Container } from "./components/Grid";
 import Logo from "./components/Logo"
 import SearchBar from "./components/SearchBar";
+import CollapseButton from "./components/CollapseButton";
 import SortField from "./components/SortField";
 import AddBookmark from "./components/AddBookmark";
 import TagList from "./components/TagList";
@@ -24,7 +25,8 @@ class App extends Component {
       filteredNote: [],
       filteredTag: [],
       search1: "",
-      search2: []
+      search2: [],
+      collapse: false
     };
   }
 
@@ -126,6 +128,10 @@ class App extends Component {
     this.setState({ search2 }, () => this.handleFilter(this.state.search1, this.state.search2))
   }
 
+  recieveCollapse = (collapse) => {
+    this.setState({collapse})
+  }
+
   sortNote = (sortField, ascending) => {
     const sortAlphabet = (a, b) => {
       var noteA = a.keyword.toLowerCase(); // ignore upper and lowercase
@@ -197,6 +203,7 @@ class App extends Component {
             </SearchBar>
             <div className="menuIconContainer">
               <SortField handleSort={this.sortNote}></SortField>
+              <CollapseButton sendCollapse={this.recieveCollapse}></CollapseButton>
               <AddBookmark handleSubmit={this.postNote} userAllTag={this.state.allTag}></AddBookmark>
             </div>
           </Col>
@@ -220,24 +227,26 @@ class App extends Component {
                   highlight={this.state.search1}
                   date={ele.date}
                   deleteOnClick={() => this.deleteNote(ele._id)}
+                  collapse={this.state.collapse}
                 ></NoteContainer>
-                <div className="tagContainer">
-                  {ele.tag.sort().map((tagEle, index) => (
-                    <TagButton
-                      key={index}
-                      text={tagEle}
-                      search={this.state.search2}
-                      highlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
-                      deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
-                    </TagButton>))}
-                  <AddTag
-                    inputId={`input${ele._id}`}
-                    callBackId={ele._id}
-                    callback={this.addTag}
-                    allTag={ele.tag}
-                    userAllTag={this.state.allTag}>
-                  </AddTag>
-                </div>
+                {!this.state.collapse &&
+                  <div className="tagContainer">
+                    {ele.tag.sort().map((tagEle, index) => (
+                      <TagButton
+                        key={index}
+                        text={tagEle}
+                        search={this.state.search2}
+                        highlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
+                        deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
+                      </TagButton>))}
+                    <AddTag
+                      inputId={`input${ele._id}`}
+                      callBackId={ele._id}
+                      callback={this.addTag}
+                      allTag={ele.tag}
+                      userAllTag={this.state.allTag}>
+                    </AddTag>
+                  </div>}
                 <div style={{ clear: 'both' }}></div>
               </ViewNote>
             ))}

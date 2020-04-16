@@ -69,11 +69,11 @@
   color: #AAAAAA;
 }
 
-/* Sort Field */
+/* Menu Button */
 .menuIconContainer {
   float: right;
 }
-.sortField, .addNewField{
+.sortField, .collapseField, .addNewField{
   float: left;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -84,7 +84,7 @@
   transition-duration: 0.4s;
   font-size: 12px;
 }
-.addNewButton {
+.addNewButton, .collapseButton {
   border-radius: 13px;
   background-color: #f95738;
   border: 1px solid #f95738;
@@ -100,17 +100,17 @@
 .addNewButton:focus {
   outline: none;
 }
-.sortButton {
+.sortButton, .collapseButton {
   border: 1px solid #114c84;
   background-color: #ffffff;
   color: #114c84;
 }
-.sortButton:hover {
+.sortButton:hover, .collapseButton:hover {
   color: #ffffff;
   background-color: #114c84;
   transition-duration: 0.4s;
 }
-.sortButton:focus {
+.sortButton:focus, .collapseButton:focus {
   outline: none;
 }
 .sortField #alphabetSort {
@@ -123,6 +123,9 @@
   border-top-right-radius: 13px;
   border-bottom-right-radius: 13px;
   padding: 3px 10px;
+}
+.collapseButton {
+  width: 87px;
 }
 
 /* Modal */
