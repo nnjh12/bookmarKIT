@@ -5,7 +5,7 @@ import API from "./utils/api";
 import { Col, Row, Container } from "./components/Grid";
 import Logo from "./components/Logo"
 import SearchBar from "./components/SearchBar";
-import CollapseButton from "./components/CollapseButton";
+import CollapseAllButton from "./components/CollapseAllButton";
 import SortField from "./components/SortField";
 import AddBookmark from "./components/AddBookmark";
 import TagList from "./components/TagList";
@@ -203,7 +203,7 @@ class App extends Component {
             </SearchBar>
             <div className="menuIconContainer">
               <SortField handleSort={this.sortNote}></SortField>
-              <CollapseButton sendCollapseAll={this.recieveCollapseAll}></CollapseButton>
+              <CollapseAllButton sendCollapseAll={this.recieveCollapseAll}></CollapseAllButton>
               <AddBookmark handleSubmit={this.postNote} userAllTag={this.state.allTag}></AddBookmark>
             </div>
           </Col>
