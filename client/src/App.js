@@ -219,6 +219,29 @@ class App extends Component {
           </Col>
           <Col size="md-10">
             {this.state.filteredNote.map((ele, index) => (
+              <ViewNote
+                key={ele._id}
+                bookmark={ele.bookmark}
+                keyword={ele.keyword}
+                highlight={this.state.search1}
+                date={ele.date}
+                deleteOnClick={() => this.deleteNote(ele._id)}
+
+                tag={ele.tag}
+                search={this.state.search2}
+                highlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
+                // deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}
+
+                inputId={`input${ele._id}`}
+                callBackId={ele._id}
+                callback={this.addTag}
+                allTag={ele.tag}
+                userAllTag={this.state.allTag}
+              >
+              </ViewNote>
+            ))}
+
+            {/* {this.state.filteredNote.map((ele, index) => (
               <ViewNote key={index} deleteOnClick={() => this.deleteNote(ele._id)}>
                 <NoteContainer
                   key={ele._id}
@@ -226,7 +249,6 @@ class App extends Component {
                   keyword={ele.keyword}
                   highlight={this.state.search1}
                   date={ele.date}
-                  deleteOnClick={() => this.deleteNote(ele._id)}
                   collapseAll={this.state.collapseAll}
                 ></NoteContainer>
                 {!this.state.collapseAll &&
@@ -249,7 +271,7 @@ class App extends Component {
                   </div>}
                 <div style={{ clear: 'both' }}></div>
               </ViewNote>
-            ))}
+            ))} */}
           </Col>
         </Row>
       </Container>
