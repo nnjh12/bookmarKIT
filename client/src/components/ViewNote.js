@@ -18,6 +18,9 @@ class ViewNote extends Component {
         let collapse = !this.state.collapse
         this.setState({ collapse })
     }
+    recieveCollapseAll = (collapseAll) => {
+        this.setState({ collapse: collapseAll })
+    }
     render() {
         return (
             <div className="viewNoteContainer">
@@ -30,7 +33,7 @@ class ViewNote extends Component {
                     </div>
                     <NoteContainer
                         bookmark={this.props.bookmark}
-                        highlight={this.props.highlight}
+                        highlight={this.props.noteHighlight}
                         collapse={this.state.collapse}
                         keyword={this.props.keyword}
                         date={this.props.date}>
@@ -42,7 +45,7 @@ class ViewNote extends Component {
                                     key={index}
                                     text={tagEle}
                                     search={this.props.search}
-                                    highlight={this.props.highlight}
+                                    highlight={this.props.tagHighlight}
                                     deleteTag={this.props.deleteTag}>
                                 </TagButton>))}
                             <AddTag

@@ -10,15 +10,12 @@ import SortField from "./components/SortField";
 import AddBookmark from "./components/AddBookmark";
 import TagList from "./components/TagList";
 import ViewNote from "./components/ViewNote";
-import NoteContainer from "./components/NoteContainer";
-import TagButton from "./components/TagButton";
-
-import AddTag from "./components/AddTag";
 
 class App extends Component {
 
   constructor(props) {
     super(props);
+    this.collapseRef = React.createRef()
     this.state = {
       allNote: [],
       allTag: [],
@@ -128,8 +125,9 @@ class App extends Component {
     this.setState({ search2 }, () => this.handleFilter(this.state.search1, this.state.search2))
   }
 
-  recieveCollapseAll = (collapseAll) => {
-    this.setState({ collapseAll })
+  handleCollapseAll = () => {
+    let collapseAll = !this.state.collapseAll
+    this.setState({ collapseAll }, () => {this.collapseRef.current.recieveCollapseAll(this.state.collapseAll)})
   }
 
   sortNote = (sortField, ascending) => {
@@ -203,7 +201,7 @@ class App extends Component {
             </SearchBar>
             <div className="menuIconContainer">
               <SortField handleSort={this.sortNote}></SortField>
-              <CollapseAllButton sendCollapseAll={this.recieveCollapseAll}></CollapseAllButton>
+              <CollapseAllButton collapseAll={this.state.collapseAll} handleCollapseAll={this.handleCollapseAll}></CollapseAllButton>
               <AddBookmark handleSubmit={this.postNote} userAllTag={this.state.allTag}></AddBookmark>
             </div>
           </Col>
@@ -220,16 +218,17 @@ class App extends Component {
           <Col size="md-10">
             {this.state.filteredNote.map((ele, index) => (
               <ViewNote
+                ref={this.collapseRef}
                 key={ele._id}
                 bookmark={ele.bookmark}
                 keyword={ele.keyword}
-                highlight={this.state.search1}
+                noteHighlight={this.state.search1}
                 date={ele.date}
                 deleteOnClick={() => this.deleteNote(ele._id)}
 
                 tag={ele.tag}
                 search={this.state.search2}
-                highlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
+                tagHighlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
                 // deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}
 
                 inputId={`input${ele._id}`}
