@@ -6,36 +6,26 @@ class TagInput extends Component {
         this.state = {
             newTag: "",
             suggestion: [],
-            suggestionSelectIndex: -1,
-            placeholder: "Add new tags here."
+            suggestionSelectIndex: -1
         };
     }
-
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
             [name]: value,
             suggestionSelectIndex: -1
         }, () => this.handleHashTag(this.state.newTag));
-    };
-
-    onSubmit = () => {
-        console.log("Note add button clicked")
-        console.log(this.state.newTag)
-        const tagArray = this.state.newTag.split("#").map(item => item.trim());
-        const filtered = tagArray.filter(item => item);
-        console.log(filtered)
-
-        this.props.callback(filtered)
-        this.setState({ newTag: "", suggestion: [], suggestionSelectIndex: -1 });
     }
-
+    handleDataExchange = (newTag) => {
+        console.log(this.state)
+        this.props.handleDataExchange(newTag)
+    }
     handleHashTag = (input) => {
+        this.handleDataExchange(input)
         let currentTag = input.substring(input.lastIndexOf('#') + 1, input.length)
         console.log(currentTag)
         this.handleAutoSuggestion(this.props.userAllTag, currentTag)
     }
-
     handleAutoSuggestion = (tagArray, input) => {
         let suggestion;
         if (input === "") {
@@ -46,19 +36,22 @@ class TagInput extends Component {
         console.log(suggestion)
         this.setState({ suggestion }, () => { console.log(this.state.suggestion) })
     }
-
+    handleMouseOver = () => {
+        this.setState({ suggestionSelectIndex: -1 })
+    }
     handleSuggestionClick = (clicked) => {
         let updatedTag = this.state.newTag.substring(0, this.state.newTag.lastIndexOf('#')) + "#" + clicked
-        this.setState({ newTag: updatedTag, suggestion: [], suggestionSelectIndex: -1 }, () => console.log(this.state))
+        this.setState({ newTag: updatedTag, suggestion: [], suggestionSelectIndex: -1 }, () => this.handleDataExchange(this.state.newTag))
         document.getElementById(this.props.inputId).focus();
     }
-
     handleKeyDown(e) {
         console.log(e.keyCode)
         let index = this.state.suggestionSelectIndex;
         let suggestion = this.state.suggestion
         console.log(index)
         switch (e.keyCode) {
+            default:
+                break;
             case 40:
                 e.preventDefault();
                 console.log('case40')
@@ -69,7 +62,6 @@ class TagInput extends Component {
                 }
                 console.log(suggestion[index])
                 this.setState({ suggestionSelectIndex: index })
-
                 break;
             case 38:
                 e.preventDefault();
@@ -81,31 +73,25 @@ class TagInput extends Component {
                 }
                 console.log(suggestion[index])
                 this.setState({ suggestionSelectIndex: index })
-
                 break;
             case 13:
                 e.preventDefault();
                 console.log('case13')
                 if (this.state.suggestionSelectIndex === -1) {
-                    this.onSubmit()
+                    this.props.onSubmit()
                 } else {
                     this.handleSuggestionClick(suggestion[index])
                 }
                 break;
         }
     }
-
-    sendDataToParent = () => {
-        this.props.callBack(this.state.newTag)
-    }
-
     render() {
         return (
             <div>
                 <input
                     type="text"
                     id={this.props.inputId}
-                    placeholder={this.state.placeholder}
+                    placeholder={this.props.placeholder}
                     name="newTag"
                     onChange={this.handleInputChange}
                     onKeyDown={this.handleKeyDown.bind(this)}
@@ -114,14 +100,14 @@ class TagInput extends Component {
                 <div className="suggestion">
                     <ul id="suggestionList">
                         {this.state.suggestion.map((ele, index) =>
-                            <li key={index} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index ? "active" : ""}>
+                            <li key={index} onMouseOver={this.handleMouseOver} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index ? "active" : ""}>
                                 {ele}
                             </li>
                         )}
                     </ul>
                 </div>
 
-                <div className="formButtonContainer">
+                {/* <div className="formButtonContainer">
                     <input
                         className="formButton"
                         type="submit"
@@ -130,7 +116,7 @@ class TagInput extends Component {
                         onClick={this.onSubmit}>
                     </input>
                     <button className="formButton" onClick={this.props.close}>CLOSE</button>
-                </div>
+                </div> */}
             </div>
         );
     }

@@ -4,28 +4,26 @@ import API from "./utils/api";
 
 import { Col, Row, Container } from "./components/Grid";
 import Logo from "./components/Logo"
-import InputNote from "./components/InputNote";
 import SearchBar from "./components/SearchBar";
+import CollapseAllButton from "./components/CollapseAllButton";
 import SortField from "./components/SortField";
 import AddBookmark from "./components/AddBookmark";
 import TagList from "./components/TagList";
 import ViewNote from "./components/ViewNote";
-import NoteContainer from "./components/NoteContainer";
-import TagButton from "./components/TagButton";
-
-import AddTag from "./components/AddTag";
 
 class App extends Component {
 
   constructor(props) {
     super(props);
+    this.collapseRef = React.createRef()
     this.state = {
       allNote: [],
       allTag: [],
       filteredNote: [],
       filteredTag: [],
       search1: "",
-      search2: []
+      search2: [],
+      collapseAll: false
     };
   }
 
@@ -114,13 +112,6 @@ class App extends Component {
     this.setState({ filteredTag })
   };
 
-  // handleFilter = (search1, search2) => {
-  //   this.setState({ search1: search1, search2: search2 }, (filteredNote) => {
-  //     filteredNote = this.state.allNote.filter(ele => this.testByInput(ele, this.state.search1) && this.testByButton(ele, this.state.search2))
-  //     this.setState({ filteredNote }, () => this.filterTag(this.state.filteredNote))
-  //   })
-  // };
-
   handleFilter = (search1, search2) => {
     let filteredNote = this.state.allNote.filter(ele => this.testByInput(ele, search1) && this.testByButton(ele, search2))
     this.setState({ filteredNote }, () => this.filterTag(this.state.filteredNote))
@@ -132,6 +123,11 @@ class App extends Component {
 
   recieveSearch2 = (search2) => {
     this.setState({ search2 }, () => this.handleFilter(this.state.search1, this.state.search2))
+  }
+
+  handleCollapseAll = () => {
+    let collapseAll = !this.state.collapseAll
+    this.setState({ collapseAll }, () => {this.collapseRef.current.recieveCollapseAll(this.state.collapseAll)})
   }
 
   sortNote = (sortField, ascending) => {
@@ -205,11 +201,11 @@ class App extends Component {
             </SearchBar>
             <div className="menuIconContainer">
               <SortField handleSort={this.sortNote}></SortField>
-              <AddBookmark  onClick={this.postNote} userAllTag={this.state.allTag}></AddBookmark>
+              <CollapseAllButton collapseAll={this.state.collapseAll} handleCollapseAll={this.handleCollapseAll}></CollapseAllButton>
+              <AddBookmark handleSubmit={this.postNote} userAllTag={this.state.allTag}></AddBookmark>
             </div>
           </Col>
         </Row>
-
         <Row>
           <Col size="md-2">
             <TagList
@@ -221,7 +217,30 @@ class App extends Component {
           </Col>
           <Col size="md-10">
             {this.state.filteredNote.map((ele, index) => (
-              // <div className="viewNoteContainer" style={{ borderRadius: "15px", backgroundColor: "#DDFFF7" }} key={index}>
+              <ViewNote
+                ref={this.collapseRef}
+                key={ele._id}
+                bookmark={ele.bookmark}
+                keyword={ele.keyword}
+                noteHighlight={this.state.search1}
+                date={ele.date}
+                deleteOnClick={() => this.deleteNote(ele._id)}
+
+                tag={ele.tag}
+                search={this.state.search2}
+                tagHighlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
+                // deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}
+
+                inputId={`input${ele._id}`}
+                callBackId={ele._id}
+                callback={this.addTag}
+                allTag={ele.tag}
+                userAllTag={this.state.allTag}
+              >
+              </ViewNote>
+            ))}
+
+            {/* {this.state.filteredNote.map((ele, index) => (
               <ViewNote key={index} deleteOnClick={() => this.deleteNote(ele._id)}>
                 <NoteContainer
                   key={ele._id}
@@ -229,52 +248,32 @@ class App extends Component {
                   keyword={ele.keyword}
                   highlight={this.state.search1}
                   date={ele.date}
-                  deleteOnClick={() => this.deleteNote(ele._id)}
+                  collapseAll={this.state.collapseAll}
                 ></NoteContainer>
-
-                <div className="tagContainer">
-                  {ele.tag.sort().map((tagEle, index) => (
-                    <TagButton
-                      key={index}
-                      text={tagEle}
-                      search={this.state.search2}
-                      highlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
-                      deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
-                    </TagButton>))}
-                  <AddTag
-                    inputId={`input${ele._id}`}
-                    callBackId={ele._id}
-                    callback={this.addTag}
-                    allTag={ele.tag}
-                    userAllTag={this.state.allTag}>
-                  </AddTag>
-                </div>
+                {!this.state.collapseAll &&
+                  <div className="tagContainer">
+                    {ele.tag.sort().map((tagEle, index) => (
+                      <TagButton
+                        key={index}
+                        text={tagEle}
+                        search={this.state.search2}
+                        highlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
+                        deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
+                      </TagButton>))}
+                    <AddTag
+                      inputId={`input${ele._id}`}
+                      callBackId={ele._id}
+                      callback={this.addTag}
+                      allTag={ele.tag}
+                      userAllTag={this.state.allTag}>
+                    </AddTag>
+                  </div>}
                 <div style={{ clear: 'both' }}></div>
-
-
-
-
-                {/* <AddTagInput
-                  inputId={`input${ele._id}`}
-                  callBackId={ele._id}
-                  callback={this.addTag}
-                  allTag={ele.tag}
-                  userAllTag={this.state.allTag}>
-                </AddTagInput> */}
               </ViewNote>
-
-            ))}
+            ))} */}
           </Col>
         </Row>
-
-        {/* <InputNote onClick={this.postNote} userAllTag={this.state.allTag}></InputNote> */}
-
-
-
-
-
       </Container>
-
     );
   }
 }

@@ -76,6 +76,8 @@ class AddTag extends Component {
         let suggestion = this.state.suggestion
         console.log(index)
         switch (e.keyCode) {
+            default: 
+                break;
             case 40:
                 e.preventDefault();
                 console.log('case40')
@@ -86,7 +88,6 @@ class AddTag extends Component {
                 }
                 console.log(suggestion[index])
                 this.setState({ suggestionSelectIndex: index })
-
                 break;
             case 38:
                 e.preventDefault();
@@ -115,9 +116,7 @@ class AddTag extends Component {
     render() {
         return (
             <div className="addTagContainer">
-                {/* <div className="plusIconContainer"> */}
                 <PlusIcon active={this.state.active} plusOnClick={this.handleActive}></PlusIcon>
-                {/* </div> */}
                 {this.state.active &&
                     <form autoComplete="off">
                         <input className="addTagInput"
@@ -144,9 +143,7 @@ class AddTag extends Component {
                                 )}
                             </ul>
                         </div>
-
-                    </form>
-                }
+                    </form>}
             </div>
 
         );

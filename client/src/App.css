@@ -29,7 +29,9 @@
   color: #114c84;
   margin: 10px 0px;
 }
-
+.iconButton {
+  cursor: pointer;
+}
 /* Search Field */
 .searchField {
   float: left;
@@ -67,11 +69,11 @@
   color: #AAAAAA;
 }
 
-/* Sort Field */
+/* Menu Button */
 .menuIconContainer {
   float: right;
 }
-.sortField, .addNewField{
+.sortField, .collapseAllField, .addNewField{
   float: left;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -82,7 +84,7 @@
   transition-duration: 0.4s;
   font-size: 12px;
 }
-.addNewButton {
+.addNewButton, .collapseAllButton {
   border-radius: 13px;
   background-color: #f95738;
   border: 1px solid #f95738;
@@ -98,17 +100,17 @@
 .addNewButton:focus {
   outline: none;
 }
-.sortButton {
+.sortButton, .collapseAllButton {
   border: 1px solid #114c84;
   background-color: #ffffff;
   color: #114c84;
 }
-.sortButton:hover {
+.sortButton:hover, .collapseAllButton:hover {
   color: #ffffff;
   background-color: #114c84;
   transition-duration: 0.4s;
 }
-.sortButton:focus {
+.sortButton:focus, .collapseAllButton:focus {
   outline: none;
 }
 .sortField #alphabetSort {
@@ -121,6 +123,9 @@
   border-top-right-radius: 13px;
   border-bottom-right-radius: 13px;
   padding: 3px 10px;
+}
+.collapseAllButton {
+  width: 87px;
 }
 
 /* Modal */
@@ -191,6 +196,10 @@
 }
 .addNewForm li {
   border-top: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+.addNewForm li:hover {
+  background-color: #f0f0f0;
 }
 .addNewForm .inactive {
   background-color: #ffffff;

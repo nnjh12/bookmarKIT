@@ -11,7 +11,7 @@ class AddBookmark extends Component {
     }
     handleShow = () => {
         this.setState({ show: true })
-    };
+    }
     handleClose = () => {
         this.setState({ show: false })
     }
@@ -24,7 +24,7 @@ class AddBookmark extends Component {
                     <span>ADD BOOKMARK</span>
                 </button>
                 <Modal show={this.state.show}>
-                    <InputNote onClick={this.props.onClick} userAllTag={this.props.userAllTag} close={this.handleClose}></InputNote>
+                    <InputNote handleSubmit={this.props.handleSubmit} userAllTag={this.props.userAllTag} close={this.handleClose}></InputNote>
                 </Modal>
             </div>
         );

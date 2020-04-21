@@ -2,8 +2,8 @@ import React from 'react'
 
 const DeleteIcon = (props) => {
     return (
-        <span className="deleteIcon" onClick={props.deleteOnClick}>
-            <a><i class="far fa-trash-alt"></i></a>
+        <span className="deleteIcon iconButton" onClick={props.deleteOnClick}>
+            <i className="far fa-trash-alt"></i>
         </span>
     );
 }
