@@ -80,7 +80,7 @@ class App extends Component {
       if (input.charAt(0) === "#") {
         return testTag(note.tag, input.substr(1));
       } else {
-        return testKeyword(note.keyword, input) || testTag(note.tag, input);
+        return testKeyword(note.bookmark, input) || testKeyword(note.keyword, input) || testTag(note.tag, input);
       }
     }
   };

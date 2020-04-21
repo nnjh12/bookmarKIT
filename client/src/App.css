@@ -270,7 +270,7 @@
   margin-left: 10px;
   padding: 10px 15px;
 }
-.viewNoteContainer .keyWord {
+.viewNoteContainer .bookMark {
   font-size: 16px;
   margin: 0px;
  }
@@ -354,6 +354,16 @@
 }
 .addTagContainer .active {
   background-color: #f0f0f0
+}
+
+/* Edit */
+.editInput {
+  width: 100%;
+  font-size: 14px;
+  border: none;
+  padding: 5px 7px;
+  margin-bottom: 5px;
+
 }
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
