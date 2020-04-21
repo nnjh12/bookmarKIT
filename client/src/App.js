@@ -15,7 +15,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.collapseRef = React.createRef()
+    this.collapseRef = [];
     this.state = {
       allNote: [],
       allTag: [],
@@ -127,7 +127,15 @@ class App extends Component {
 
   handleCollapseAll = () => {
     let collapseAll = !this.state.collapseAll
-    this.setState({ collapseAll }, () => {this.collapseRef.current.recieveCollapseAll(this.state.collapseAll)})
+    this.setState({ collapseAll }, () => this.sendCollapseAll(this.collapseRef.length))
+  }
+
+  sendCollapseAll = (length) => {
+    console.log(this.state.collapseAll)
+    console.log(length)
+    for (let i = 0; i < length; i++) {
+      this.collapseRef[i].recieveCollapseAll(this.state.collapseAll)
+    }
   }
 
   sortNote = (sortField, ascending) => {
@@ -218,7 +226,7 @@ class App extends Component {
           <Col size="md-10">
             {this.state.filteredNote.map((ele, index) => (
               <ViewNote
-                ref={this.collapseRef}
+                ref={ref => (this.collapseRef[index] = ref)}
                 key={ele._id}
                 bookmark={ele.bookmark}
                 keyword={ele.keyword}
