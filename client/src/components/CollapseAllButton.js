@@ -6,7 +6,7 @@ const CollapseAllButton = (props) => {
             <button
                 className="menuButton collapseAllButton"
                 onClick={props.handleCollapseAll}>
-                <span>{props.collapseAll ? "EXPAND" : "COLLAPSE"}</span>
+                <span>{props.collapseAll ? "EXPAND ALL" : "COLLAPSE ALL"}</span>
             </button>
         </div>
     );
