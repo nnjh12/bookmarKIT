@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import PlusIcon from "./PlusIcon";
 
-class AddTag extends Component {
+class TagInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            active: false,
             newTag: "",
             suggestion: [],
             suggestionSelectIndex: -1,
@@ -21,31 +19,16 @@ class AddTag extends Component {
         }, () => this.handleHashTag(this.state.newTag));
     };
 
-    handleActive = () => {
-        let active = !this.state.active
-        this.setState({ active })
-    };
-
     onSubmit = () => {
-        console.log("tags add button clicked")
+        console.log("Note add button clicked")
         console.log(this.state.newTag)
         const tagArray = this.state.newTag.split("#").map(item => item.trim());
         const filtered = tagArray.filter(item => item);
         console.log(filtered)
 
-        this.props.callback(this.props.callBackId, filtered)
-        this.setState({ active: false, newTag: "", suggestion: [], suggestionSelectIndex: -1 });
+        this.props.callback(filtered)
+        this.setState({ newTag: "", suggestion: [], suggestionSelectIndex: -1 });
     }
-
-    // onKeyDownHashTag = (event) => {
-    //     if (event.key === "#") {
-    //         console.log(event.target.value)
-    //         event.preventDefault();
-    //         // this.handleAutoSuggestion(this.props.userAllTag, this.state.newTag)
-    //         // let newTagList = [...this.state.newTagList, event.target.value.toLowerCase()]
-    //         // this.setState({ newTag: "", newTagList: newTagList, suggestion: [] })
-    //     }
-    // }
 
     handleHashTag = (input) => {
         let currentTag = input.substring(input.lastIndexOf('#') + 1, input.length)
@@ -112,45 +95,45 @@ class AddTag extends Component {
         }
     }
 
+    sendDataToParent = () => {
+        this.props.callBack(this.state.newTag)
+    }
+
     render() {
         return (
-            <div className="addTagContainer">
-                {/* <div className="plusIconContainer"> */}
-                <PlusIcon active={this.state.active} plusOnClick={this.handleActive}></PlusIcon>
-                {/* </div> */}
-                {this.state.active &&
-                    <form autoComplete="off">
-                        <input className="addTagInput"
-                            type="text"
-                            id={this.props.inputId}
-                            placeholder={this.state.placeholder}
-                            name="newTag"
-                            onChange={this.handleInputChange}
-                            onKeyDown={this.handleKeyDown.bind(this)}
-                            value={this.state.newTag}>
-                        </input>
-                        <input
-                            type="submit"
-                            value="ADD"
-                            disabled={this.state.newTag ? false : true}
-                            onClick={this.onSubmit}>
-                        </input>
-                        <div className="suggestion">
-                            <ul id="suggestionList">
-                                {this.state.suggestion.map((ele, index) =>
-                                    <li key={index} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index ? "active" : "inactive"}>
-                                        {ele}
-                                    </li>
-                                )}
-                            </ul>
-                        </div>
+            <div>
+                <input
+                    type="text"
+                    id={this.props.inputId}
+                    placeholder={this.state.placeholder}
+                    name="newTag"
+                    onChange={this.handleInputChange}
+                    onKeyDown={this.handleKeyDown.bind(this)}
+                    value={this.state.newTag}>
+                </input>
+                <div className="suggestion">
+                    <ul id="suggestionList">
+                        {this.state.suggestion.map((ele, index) =>
+                            <li key={index} onClick={() => this.handleSuggestionClick(ele)} className={this.state.suggestionSelectIndex === index ? "active" : ""}>
+                                {ele}
+                            </li>
+                        )}
+                    </ul>
+                </div>
 
-                    </form>
-                }
+                <div className="formButtonContainer">
+                    <input
+                        className="formButton"
+                        type="submit"
+                        value="ADD"
+                        disabled={this.props.disabled ? false : true}
+                        onClick={this.onSubmit}>
+                    </input>
+                    <button className="formButton" onClick={this.props.close}>CLOSE</button>
+                </div>
             </div>
-
         );
     }
 }
 
-export default AddTag;
+export default TagInput;

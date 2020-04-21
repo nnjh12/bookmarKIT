@@ -5,13 +5,13 @@ class SortField extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeSortField: "",
+            activeSortField: "date",
             ascending: false
         };
     }
 
     onClick = (field) => {
-        console.log("sort on lcikc")
+        console.log("sort on click")
         if (this.state.activeSortField === field) {
             this.setState({ ascending: !this.state.ascending }, () => {
                 console.log(this.state)
@@ -28,20 +28,21 @@ class SortField extends Component {
 
     render() {
         return (
-            <div>
+            <div className="sortField">
                 <SortButton
-                    sortField="alphabet"
-                    arrow={this.state.activeSortField === "alphabet" ? (this.state.ascending ? <i className='fas fa-angle-up'></i> : <i className='fas fa-angle-down'></i>) : ""}
+                    id="alphabetSort"
+                    sortField="A-Z"
+                    arrow={this.state.activeSortField === "alphabet" ? (this.state.ascending ? <i class="fas fa-sort-alpha-down"></i> : <i class="fas fa-sort-alpha-down-alt"></i>) : ""}
                     // ascending={this.state.activeSortField === "alphabet" ? this.state.ascending : true}
                     onClick={() => this.onClick("alphabet")}>
                 </SortButton>
                 <SortButton
-                    sortField="date"
-                    arrow={this.state.activeSortField === "date" ? (this.state.ascending ? <i className='fas fa-angle-up'></i> : <i className='fas fa-angle-down'></i>) : ""}
+                    id="dateSort"
+                    sortField="DATE"
+                    arrow={this.state.activeSortField === "date" ? (this.state.ascending ? <i class="fas fa-sort-numeric-down"></i> : <i class="fas fa-sort-numeric-down-alt"></i>) : ""}
                     // ascending={this.state.activeSortField === "alphabet" ? this.state.ascending : true}
                     onClick={() => this.onClick("date")}>
                 </SortButton>
-
             </div>
         );
     }

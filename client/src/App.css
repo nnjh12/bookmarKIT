@@ -18,60 +18,334 @@
   font-size: large;
 }
 
-/* Add Tag Style */
-.tagInputContainer {
-  border: 1px solid green;
-
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+/* Logo Field */
+.logoField {
+  margin: auto;
+  text-align: center;
+  font-size: 20px;
+  color: #114c84;
+  margin: 10px 0px;
 }
 
-.tagInputContainer .tagList > div{
-  /* display: inline-block; */
+/* Search Field */
+.searchField {
   float: left;
-  margin-right: 10px;
-  padding: 2px;
+  width: 70%;
+  margin: 10px 0px;
 }
-
-.tagInputContainer .tagList .closeButton {
-  float: right;
-  margin-left: 10px;
+/* .searchField:after { 
+    content: " "; 
+    display: block;
+    clear: both;
+}  */
+.searchBox {
+  border-bottom: 1px solid #AAAAAA;
+  float: left;
+  width: 100%;
 }
-
-.tagInputContainer form {
-  display: inline-block;
-  position: relative;
-  clear: both;
+.searchIcon {
+  color: #AAAAAA;
+  text-align: center;
+  padding: 5px;
 }
-
-.tagInputContainer form input[type="text"] {
-  padding-right: 80px;
+.searchInput {
+  outline: none;
   border: none;
-  background-color:transparent;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+  width: 95%;
 }
-.tagInputContainer form input[type="text"]:focus {
-  outline:none !important;
+.searchInput::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #AAAAAA;
+  opacity: 1; /* Firefox */
 }
-.tagInputContainer form input[type="submit"] {
+.searchInput:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #AAAAAA;
+}
+.searchInput::-ms-input-placeholder { /* Microsoft Edge */
+  color: #AAAAAA;
+}
+
+/* Sort Field */
+.menuIconContainer {
+  float: right;
+}
+.sortField, .addNewField{
+  float: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 7px;
+}
+.menuButton {
+  color: #ffffff;
+  transition-duration: 0.4s;
+  font-size: 12px;
+}
+.addNewButton {
+  border-radius: 13px;
+  background-color: #f95738;
+  border: 1px solid #f95738;
+  color: #ffffff;
+  padding: 3px 10px;
+}
+.addNewButton:hover {
+  color: #ffffff;
+  background-color: #ffcc33;
+  border: 1px solid #ffcc33;
+  transition-duration: 0.4s;
+}
+.addNewButton:focus {
+  outline: none;
+}
+.sortButton {
+  border: 1px solid #114c84;
+  background-color: #ffffff;
+  color: #114c84;
+}
+.sortButton:hover {
+  color: #ffffff;
+  background-color: #114c84;
+  transition-duration: 0.4s;
+}
+.sortButton:focus {
+  outline: none;
+}
+.sortField #alphabetSort {
+  border-top-left-radius: 13px;
+  border-bottom-left-radius: 13px;
+  border-right: 0px;
+  padding: 3px 10px;
+}
+.sortField #dateSort {
+  border-top-right-radius: 13px;
+  border-bottom-right-radius: 13px;
+  padding: 3px 10px;
+}
+
+/* Modal */
+.modalContainer {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modalContent {
+  border-radius: 20px;
+  max-width: 700px;
+  height: 350px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  margin: auto; /* 15% from the top and centered */
+  padding: 30px 25px;
+  /* border: 1px solid #888; */
+}
+
+/* Add New Form*/
+.addNewForm label {
+ font-size: 12px;
+ margin: 0;
+ margin-top: 12px;
+}
+.addNewForm input[type="text"] {
+  padding: 5px 7px;
+  background-color: #fbf8ee;
+  border: none;
+  font-size: 14px;
+  width: 100%;
+}
+.addNewForm .formButtonContainer {
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.addNewForm .formButton {
+  border-radius: 8px;
+  /* float: left; */
+  background-color: #114c84;
+  border:1px solid #114c84;
+  margin-right: 5px;
+  padding: 3px 8px;
+  font-size: 12px;
+  color:#ffffff;
+}
+.addNewForm ul {
+  list-style-type: none;
+  position: relative;
+  z-index: 100;
+  font-size: 14px;
+  padding: 0px;
+  padding-left: 5px;
+  margin: 0px;
+  background-color: #ffffff;
+  width: 100%;
+}
+.addNewForm li {
+  border-top: 1px solid #f0f0f0;
+}
+.addNewForm .inactive {
+  background-color: #ffffff;
+}
+.addNewForm .active {
+  background-color: #f0f0f0
+}
+
+/* Tag List Field */
+.tagListButton {
+  font-size: 14px;
+  text-align: justify;
+  padding: 5px 12px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border:1px #212529 solid;
+  outline: none;
+  transition-duration: 0.4s;
+  text-transform: uppercase;
+  display: block;
+  max-width: 100%;
+  word-wrap: break-word
+}
+.tagListButton:focus {
+  outline: none;
+}
+/* Tag Button */
+.tagContainer {
+  margin-top: 5px;
+  float: left;
+}
+.tagButton {
+  font-size: 12px;
+  padding: 3px 10px;
+  margin-right: 5px;
+  margin-bottom: 3px;
+  background: none;
+  border-radius: 5px;
+  border:1px #212529 solid;
+  outline: none;
+  transition-duration: 0.4s;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.tagButton:focus {
+  outline: none;
+}
+
+/* Note Field */
+.viewNoteContainer {
+  background-color: #fbf8ee;
+  margin-bottom: 10px;
+  position: relative;
+  border-radius: 10px;
+}
+.viewNoteContainer > .colorPanel {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 80px;
+  left: 0;
+  width: 10px;
+  height: 100%;
+  background-color: #114c84;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.viewNoteContainer > .contentPanel {
+  margin-left: 10px;
+  padding: 10px 15px;
+}
+.viewNoteContainer .keyWord {
+  font-size: 16px;
+  margin: 0px;
+ }
+.viewNoteContainer .keyWord {
+  font-size: 16px;
+  margin: 0px;
+ }
+.viewNoteContainer .date {
+ font-size: 12px;
+ margin-bottom: 0px;
+}
+.viewNoteContainer > .contentPanel > .iconPanel {
+  float: right;
+}
+.viewNoteContainer > .contentPanel > .iconPanel i {
+  color: #AAAAAA;
+  margin-left: 5px;
 }
 
-.tagInputContainer .suggestion > div {
-  background-color: white;
+/* Add Tag */
+.addTagContainer{
+  display: inline-block;
 }
-
-.tagInputContainer .suggestion > div:hover {
-  background-color: green;
+.plusIcon {
+  display: inline-block;
+  margin-right: 3px;
+  vertical-align: middle;
 }
-
-.active {
-  background-color: yellow;
+.plusIcon i {
+  vertical-align: middle;
 }
-
+.addTagContainer form {
+  display: inline-block;
+  vertical-align: middle;
+  height: 24.6px;
+}
+.addTagContainer input[type="text"] {
+  min-width: 400px;
+  height: 100%;
+  font-size: 14px;
+  padding-left: 5px;
+  padding-right: 50px;
+  border: none;
+  vertical-align: middle;
+}
+.addTagContainer input[type="text"]::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #AAAAAA;
+  opacity: 1; /* Firefox */
+}
+.addTagContainer input[type="text"]:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #AAAAAA;
+}
+.addTagContainer input[type="text"]::-ms-input-placeholder { /* Microsoft Edge */
+  color: #AAAAAA;
+}
+.addTagContainer input[type="submit"] {
+  height: 100%;
+  margin-left: -50px;
+  font-size: 14px;
+  width: 50px;
+  border: none;
+  vertical-align: middle;
+}
+.addTagContainer input:focus {
+  outline: none;
+}
+.addTagContainer ul {
+  list-style-type: none;
+  position: relative;
+  z-index: 100;
+  font-size: 14px;
+  padding: 0px 5px;
+  padding-right: 50px;
+  margin: 0px;
+}
+.addTagContainer li {
+  border-top: 1px solid #f0f0f0;
+}
+.addTagContainer .inactive {
+  background-color: #ffffff;
+}
+.addTagContainer .active {
+  background-color: #f0f0f0
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
