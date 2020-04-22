@@ -18,6 +18,10 @@ export default {
   saveNote: function (bookData) {
     return axios.post("/api/note", bookData);
   },
+  // Update a note to the database
+  editNote: function (id, data) {
+    return axios.put("/api/note/" + id, data)
+  },
   // Gets all tag
   getAllTag: function () {
     return axios.get("/api/tag");

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TagButtonEdit from "./TagButtonEdit";
 import AddTag from "./AddTag";
+import DeleteIcon from "./DeleteIcon";
 var moment = require("moment");
 
 
@@ -28,13 +29,24 @@ class EditNote extends Component {
     addTag = (id, newTag) => {
         this.setState({ newTag }, () => { console.log(this.state.newTag) })
     };
+    onSubmit = () => {
+        console.log("Edit Save button clicked")
+        const updatedTag = this.state.tag.concat(this.state.newTag)
+        const updatedNote = {
+            bookmark: this.state.bookmarkUserInput,
+            keyword: this.state.keywordUserInput,
+            tag: updatedTag
+        }
+        this.props.handleEditSubmit(this.props.noteId, updatedNote)
+        this.props.handleEditCancel()
+    }
     render() {
         return (
             <div className="viewNoteContainer">
                 <div className="colorPanel"></div>
                 <div className="contentPanel">
                     {/* <div className="iconPanel">
-                        <DeleteIcon deleteOnClick={this.props.deleteOnClick}></DeleteIcon>
+                        <DeleteIcon deleteIcon="far fa-trash-alt" deleteOnClick={this.props.deleteOnClick}></DeleteIcon>
                     </div> */}
                     <div className="noteContainer">
                         <input
@@ -76,8 +88,26 @@ class EditNote extends Component {
                             userAllTag={this.props.userAllTag}>
                         </AddTag>
                     </div>
+                    {/* <div style={{ clear: 'both' }}></div> */}
+
+                    <div className="editMenuContainer">
+                        <input
+                            className="editMenuButton"
+                            type="submit"
+                            value="SAVE"
+                            onClick={this.onSubmit}>
+                        </input>
+
+                        <button
+                            className="editMenuButton"
+                            onClick={this.props.handleEditCancel}>
+                            <span>CANCEL</span>
+                        </button>
+                    </div>
 
                     <div style={{ clear: 'both' }}></div>
+
+
                 </div>
             </div>
         );

@@ -63,6 +63,13 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
+  editNote = (id, updatedNote) => {
+    console.log(id, updatedNote);
+    API.editNote(id, updatedNote)
+      .then(this.loadNote)
+      .catch(err => console.log(err));
+  }
+
   testByInput = (note, input) => {
     const testKeyword = (str, key) => {
       return str.toLowerCase().indexOf(key) > -1;
@@ -228,6 +235,7 @@ class App extends Component {
               <ViewNote
                 ref={ref => (this.collapseRef[index] = ref)}
                 key={ele._id}
+                noteId={ele._id}
                 bookmark={ele.bookmark}
                 keyword={ele.keyword}
                 noteHighlight={this.state.search1}
@@ -244,6 +252,8 @@ class App extends Component {
                 callback={this.addTag}
                 allTag={ele.tag}
                 userAllTag={this.state.allTag}
+
+                handleEditSubmit={this.editNote}
               >
               </ViewNote>
             ))}

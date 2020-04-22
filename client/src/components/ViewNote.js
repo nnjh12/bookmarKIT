@@ -26,6 +26,9 @@ class ViewNote extends Component {
     handleEdit = () => {
         this.setState({edit:true})
     }
+    handleEditCancel = () => {
+        this.setState({edit:false})
+    }
     render() {
         return (
             this.state.edit ?
@@ -42,6 +45,10 @@ class ViewNote extends Component {
                     callBackId={this.props.callBackId}
                     allTag={this.props.allTag}
                     userAllTag={this.props.userAllTag}
+
+                    noteId={this.props.noteId}
+                    handleEditSubmit={this.props.handleEditSubmit}
+                    handleEditCancel={this.handleEditCancel}
                 >
                 </EditNote>
 
