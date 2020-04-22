@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import TagButtonEdit from "./TagButtonEdit";
 import AddTag from "./AddTag";
-import DeleteIcon from "./DeleteIcon";
 var moment = require("moment");
-
-
 
 class EditNote extends Component {
     constructor(props) {
@@ -85,7 +82,8 @@ class EditNote extends Component {
                             callBackId={this.props.callBackId}
                             callback={this.addTag}
                             allTag={this.props.allTag}
-                            userAllTag={this.props.userAllTag}>
+                            userAllTag={this.props.userAllTag}
+                            currentAllTag={this.props.tag}>
                         </AddTag>
                     </div>
                     {/* <div style={{ clear: 'both' }}></div> */}

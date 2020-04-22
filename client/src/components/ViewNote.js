@@ -85,7 +85,8 @@ class ViewNote extends Component {
                                     callBackId={this.props.callBackId}
                                     callback={this.props.callback}
                                     allTag={this.props.allTag}
-                                    userAllTag={this.props.userAllTag}>
+                                    userAllTag={this.props.userAllTag}
+                                    currentAllTag={this.props.tag}>
                                 </AddTag>
                             </div>
                         }
