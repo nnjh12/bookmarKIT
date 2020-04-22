@@ -35,7 +35,7 @@
 /* Search Field */
 .searchField {
   float: left;
-  width: 70%;
+  width: 65%;
   margin: 10px 0px;
 }
 /* .searchField:after { 
@@ -274,17 +274,30 @@
   margin-left: 10px;
   padding: 10px 15px;
 }
-.viewNoteContainer .bookMark {
-  font-size: 16px;
-  margin: 0px;
- }
 .viewNoteContainer .keyWord {
+  float: left;
   font-size: 16px;
   margin: 0px;
  }
+.viewNoteContainer .bookMark {
+  float: left;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #AAAAAA;
+ }
+.viewNoteContainer .bookMark a {
+  font-size: 12px;
+  color: #AAAAAA;
+  margin: 0px;
+  margin-left: 10px;
+  line-height: 12px;
+ } 
 .viewNoteContainer .date {
- font-size: 12px;
- margin-bottom: 0px;
+  clear: both;
+  font-size: 12px;
+  margin-bottom: 0px;
 }
 .viewNoteContainer > .contentPanel > .iconPanel {
   float: right;
@@ -362,11 +375,16 @@
 
 /* Edit */
 .editInput {
-  width: 100%;
   font-size: 14px;
   border: none;
-  padding: 5px 7px;
+  padding: 2px 7px;
   margin-bottom: 5px;
+  margin-right: 10px;
+  min-width: 45%;
+
+}
+.editInput[name="bookmarkUserInput"] {
+  min-width: 45%;
 }
 .editMenuContainer {
   float: right;

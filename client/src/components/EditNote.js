@@ -49,17 +49,17 @@ class EditNote extends Component {
                         <input
                             className="editInput"
                             type="text"
-                            name="bookmarkUserInput"
+                            name="keywordUserInput"
                             onChange={this.handleInputChange}
-                            value={this.state.bookmarkUserInput}
+                            value={this.state.keywordUserInput}
                             autoFocus>
                         </input>
                         <input
                             className="editInput"
                             type="text"
-                            name="keywordUserInput"
+                            name="bookmarkUserInput"
                             onChange={this.handleInputChange}
-                            value={this.state.keywordUserInput}>
+                            value={this.state.bookmarkUserInput}>
                         </input>
                         <p className="date">{moment(this.props.date).format("YYYY-MM-DD h:mm a")}</p>
                     </div>
