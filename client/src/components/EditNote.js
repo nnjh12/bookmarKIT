@@ -40,7 +40,11 @@ class EditNote extends Component {
     render() {
         return (
             <div className="viewNoteContainer">
-                <div className="colorPanel"></div>
+                <div className="colorPanel"
+                    style={{
+                        backgroundColor: this.props.noteId === this.props.activeNote && "#f96738"
+                    }}>
+                   </div>
                 <div className="contentPanel">
                     {/* <div className="iconPanel">
                         <DeleteIcon deleteIcon="far fa-trash-alt" deleteOnClick={this.props.deleteOnClick}></DeleteIcon>

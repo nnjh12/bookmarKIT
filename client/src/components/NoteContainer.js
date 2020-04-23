@@ -7,7 +7,7 @@ class NoteContainer extends Component {
     render() {
         return (
             <div className="noteContainer">
-                <div className="keyWord" >
+                <div className="keyWord">
                     <a href={this.props.bookmark} target="_blank" rel="noopener noreferrer">
                         <Highlight text={this.props.keyword} highlight={this.props.highlight}></Highlight>
                     </a>

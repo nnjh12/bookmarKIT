@@ -24,15 +24,16 @@ class ViewNote extends Component {
         this.setState({ collapse: collapseAll })
     }
     handleEdit = () => {
-        this.setState({edit:true})
+        this.setState({ edit: true })
     }
     handleEditCancel = () => {
-        this.setState({edit:false})
+        this.setState({ edit: false })
     }
     render() {
         return (
             this.state.edit ?
                 <EditNote
+                    activeNote={this.props.activeNote}
                     deleteOnClick={this.props.deleteOnClick}
                     bookmark={this.props.bookmark}
                     collapse={this.state.collapse}
@@ -40,7 +41,7 @@ class ViewNote extends Component {
                     date={this.props.date}
 
                     tag={this.props.tag}
-                    
+
                     inputId={this.props.inputId}
                     callBackId={this.props.callBackId}
                     allTag={this.props.allTag}
@@ -54,8 +55,12 @@ class ViewNote extends Component {
 
                 :
 
-                <div className="viewNoteContainer">
-                    <div className="colorPanel"></div>
+                <div className="viewNoteContainer" onClick={this.props.handleActiveNote}>
+                    <div className="colorPanel"
+                    style={{
+                        backgroundColor: this.props.noteId === this.props.activeNote && "#f96738"
+                    }}>
+                   </div>
                     <div className="contentPanel">
                         <div className="iconPanel">
                             <CollapseIcon collapse={this.state.collapse} handleCollapse={this.handleCollapse}></CollapseIcon>

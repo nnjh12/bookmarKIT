@@ -23,7 +23,8 @@ class App extends Component {
       filteredTag: [],
       search1: "",
       search2: [],
-      collapseAll: false
+      collapseAll: false,
+      activeNote: ""
     };
   }
 
@@ -201,6 +202,9 @@ class App extends Component {
       })
       .catch(err => console.log(err));
   };
+  handleActiveNote = (id) => {
+    this.setState({ activeNote: id })
+  }
 
   render() {
     return (
@@ -235,6 +239,8 @@ class App extends Component {
               <ViewNote
                 ref={ref => (this.collapseRef[index] = ref)}
                 key={ele._id}
+                handleActiveNote={() => this.handleActiveNote(ele._id)}
+                activeNote={this.state.activeNote}
                 noteId={ele._id}
                 bookmark={ele.bookmark}
                 keyword={ele.keyword}

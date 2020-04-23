@@ -276,22 +276,24 @@
 }
 .viewNoteContainer .keyWord {
   float: left;
+  /* display:table-cell; */
   font-size: 16px;
   margin: 0px;
  }
 .viewNoteContainer .bookMark {
-  float: left;
-  max-width: 300px;
+  /* float: left;
+  max-width: 300px; */
+  width: auto;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #AAAAAA;
+  padding: 0px 10px;
  }
 .viewNoteContainer .bookMark a {
   font-size: 12px;
   color: #AAAAAA;
   margin: 0px;
-  margin-left: 10px;
   line-height: 12px;
  } 
 .viewNoteContainer .date {
@@ -380,11 +382,15 @@
   padding: 2px 7px;
   margin-bottom: 5px;
   margin-right: 10px;
-  min-width: 45%;
-
+  width: 100%;
+  height: 24px;
 }
 .editInput[name="bookmarkUserInput"] {
-  min-width: 45%;
+  font-size: 12px;
+}
+.editInput:focus {
+  outline: none;
+  border-bottom: 1.5px solid #007bff
 }
 .editMenuContainer {
   float: right;
