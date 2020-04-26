@@ -12,9 +12,18 @@ class ViewNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            noteId: this.props.noteId,
+            active: false,
             collapse: false,
             edit: false
         };
+    }
+    handleActive = (prev) => {
+        if (prev) {
+            this.setState({ active: false, edit: false }, () => { console.log("child Prev"); console.log(this.state) })
+        } else {
+            this.setState({ active: true }, () => { console.log("child Current"); console.log(this.state) })
+        }
     }
     handleCollapse = () => {
         let collapse = !this.state.collapse
@@ -24,14 +33,13 @@ class ViewNote extends Component {
         this.setState({ collapse: collapseAll })
     }
     handleEdit = () => {
-        this.setState({ edit: true })
-    }
-    handleEditCancel = () => {
-        this.setState({ edit: false })
+        let edit = !this.state.edit
+        console.log(edit)
+        this.setState({ edit }, () => { console.log("handle edit"); console.log(this.state) })
     }
     render() {
         return (
-            this.state.edit ?
+            this.state.edit && this.state.active?
                 <EditNote
                     activeNote={this.props.activeNote}
                     deleteOnClick={this.props.deleteOnClick}
@@ -49,7 +57,7 @@ class ViewNote extends Component {
 
                     noteId={this.props.noteId}
                     handleEditSubmit={this.props.handleEditSubmit}
-                    handleEditCancel={this.handleEditCancel}
+                    handleEditCancel={this.handleEdit}
                 >
                 </EditNote>
 
@@ -57,10 +65,10 @@ class ViewNote extends Component {
 
                 <div className="viewNoteContainer" onClick={this.props.handleActiveNote}>
                     <div className="colorPanel"
-                    style={{
-                        backgroundColor: this.props.noteId === this.props.activeNote && "#f96738"
-                    }}>
-                   </div>
+                        style={{
+                            backgroundColor: this.state.active && "#f96738"
+                        }}>
+                    </div>
                     <div className="contentPanel">
                         <div className="iconPanel">
                             <CollapseIcon collapse={this.state.collapse} handleCollapse={this.handleCollapse}></CollapseIcon>
