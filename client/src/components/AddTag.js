@@ -59,6 +59,7 @@ class AddTag extends Component {
             suggestion = [];
         } else {
             suggestion = tagArray.filter(i => i.tag.startsWith(input)).map(ele => ele.tag);
+            suggestion = suggestion.filter(ele => !this.props.currentAllTag.includes(ele));
         }
         console.log(suggestion)
         this.setState({ suggestion }, () => { console.log(this.state.suggestion) })
@@ -76,7 +77,7 @@ class AddTag extends Component {
         let suggestion = this.state.suggestion
         console.log(index)
         switch (e.keyCode) {
-            default: 
+            default:
                 break;
             case 40:
                 e.preventDefault();

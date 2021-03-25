@@ -35,7 +35,7 @@
 /* Search Field */
 .searchField {
   float: left;
-  width: 70%;
+  width: 65%;
   margin: 10px 0px;
 }
 /* .searchField:after { 
@@ -183,6 +183,10 @@
   font-size: 12px;
   color:#ffffff;
 }
+.formButtonContainer > button{
+  background-color: #AAAAAA !important;
+  border:1px solid #AAAAAA !important;
+}
 .addNewForm ul {
   list-style-type: none;
   position: relative;
@@ -271,16 +275,31 @@
   padding: 10px 15px;
 }
 .viewNoteContainer .keyWord {
+  float: left;
+  /* display:table-cell; */
   font-size: 16px;
   margin: 0px;
  }
-.viewNoteContainer .keyWord {
-  font-size: 16px;
-  margin: 0px;
+.viewNoteContainer .bookMark {
+  /* float: left;
+  max-width: 300px; */
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #AAAAAA;
+  padding: 0px 10px;
  }
+.viewNoteContainer .bookMark a {
+  font-size: 12px;
+  color: #AAAAAA;
+  margin: 0px;
+  line-height: 12px;
+ } 
 .viewNoteContainer .date {
- font-size: 12px;
- margin-bottom: 0px;
+  clear: both;
+  font-size: 12px;
+  margin-bottom: 0px;
 }
 .viewNoteContainer > .contentPanel > .iconPanel {
   float: right;
@@ -354,6 +373,44 @@
 }
 .addTagContainer .active {
   background-color: #f0f0f0
+}
+
+/* Edit */
+.editInput {
+  font-size: 14px;
+  border: none;
+  padding: 2px 7px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  width: 100%;
+  height: 24px;
+}
+.editInput[name="bookmarkUserInput"] {
+  font-size: 12px;
+}
+.editInput:focus {
+  outline: none;
+  border-bottom: 1.5px solid #007bff
+}
+.editMenuContainer {
+  float: right;
+}
+.editMenuButton {
+  float: left;
+  border-radius: 8px;
+  background-color: #114c84;
+  border:1px solid #114c84;
+  margin-left: 3px;
+  padding: 3px 8px;
+  font-size: 12px;
+  color:#ffffff;
+}
+.editMenuContainer button{
+  background-color: #AAAAAA;
+  border:1px solid #AAAAAA;
+}
+.editMenuContainer input:focus, button:focus {
+  outline: none;
 }
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

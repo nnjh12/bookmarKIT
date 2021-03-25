@@ -75,11 +75,11 @@ class InputNote extends Component {
                     <input
                         className="formButton"
                         type="submit"
-                        value="ADD"
+                        value="SAVE"
                         disabled={this.state.bookmarkUserInput ? false : true}
                         onClick={this.onSubmit}>
                     </input>
-                    <button className="formButton" onClick={this.props.close}>CLOSE</button>
+                    <button className="formButton" onClick={this.props.close}>CANCEL</button>
                 </div>
             </form>
         );

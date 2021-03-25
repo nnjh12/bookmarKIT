@@ -23,7 +23,8 @@ class App extends Component {
       filteredTag: [],
       search1: "",
       search2: [],
-      collapseAll: false
+      collapseAll: false,
+      activeNote: ""
     };
   }
 
@@ -58,10 +59,18 @@ class App extends Component {
 
   deleteNote = (id) => {
     console.log("Delete")
+    this.setState({activeNote:""})
     API.deleteNote(id)
       .then(this.loadNote)
       .catch(err => console.log(err));
   };
+
+  editNote = (id, updatedNote) => {
+    console.log(id, updatedNote);
+    API.editNote(id, updatedNote)
+      .then(this.loadNote)
+      .catch(err => console.log(err));
+  }
 
   testByInput = (note, input) => {
     const testKeyword = (str, key) => {
@@ -80,7 +89,7 @@ class App extends Component {
       if (input.charAt(0) === "#") {
         return testTag(note.tag, input.substr(1));
       } else {
-        return testKeyword(note.keyword, input) || testTag(note.tag, input);
+        return testKeyword(note.bookmark, input) || testKeyword(note.keyword, input) || testTag(note.tag, input);
       }
     }
   };
@@ -195,6 +204,27 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
+  handleActiveNote = (id) => {
+    if (this.state.activeNote === id) {
+      return
+    } else {
+      this.setState((prevState) => {
+        // console.log(prevState.activeNote);
+        this.handleChildActive(prevState.activeNote, true)
+        return {activeNote: id}
+      }, () => {this.handleChildActive(this.state.activeNote, false)})
+  
+    }
+  }
+  handleChildActive = (id,prev) => {
+    let current = this.collapseRef.filter(ele => ele.props.noteId === id);
+    console.log(current)
+    if (current.length===0) {
+      return
+    } else {
+      current[0].handleActive(prev)
+    }
+  }
   render() {
     return (
       <Container fluid>
@@ -228,6 +258,9 @@ class App extends Component {
               <ViewNote
                 ref={ref => (this.collapseRef[index] = ref)}
                 key={ele._id}
+                handleActiveNote={() => this.handleActiveNote(ele._id)}
+                activeNote={this.state.activeNote}
+                noteId={ele._id}
                 bookmark={ele.bookmark}
                 keyword={ele.keyword}
                 noteHighlight={this.state.search1}
@@ -244,41 +277,11 @@ class App extends Component {
                 callback={this.addTag}
                 allTag={ele.tag}
                 userAllTag={this.state.allTag}
+
+                handleEditSubmit={this.editNote}
               >
               </ViewNote>
             ))}
-
-            {/* {this.state.filteredNote.map((ele, index) => (
-              <ViewNote key={index} deleteOnClick={() => this.deleteNote(ele._id)}>
-                <NoteContainer
-                  key={ele._id}
-                  bookmark={ele.bookmark}
-                  keyword={ele.keyword}
-                  highlight={this.state.search1}
-                  date={ele.date}
-                  collapseAll={this.state.collapseAll}
-                ></NoteContainer>
-                {!this.state.collapseAll &&
-                  <div className="tagContainer">
-                    {ele.tag.sort().map((tagEle, index) => (
-                      <TagButton
-                        key={index}
-                        text={tagEle}
-                        search={this.state.search2}
-                        highlight={this.state.search1.charAt(0) === "#" ? this.state.search1.substr(1) : this.state.search1}
-                        deleteTag={() => this.deleteTag(ele._id, encodeURIComponent(tagEle))}>
-                      </TagButton>))}
-                    <AddTag
-                      inputId={`input${ele._id}`}
-                      callBackId={ele._id}
-                      callback={this.addTag}
-                      allTag={ele.tag}
-                      userAllTag={this.state.allTag}>
-                    </AddTag>
-                  </div>}
-                <div style={{ clear: 'both' }}></div>
-              </ViewNote>
-            ))} */}
           </Col>
         </Row>
       </Container>
