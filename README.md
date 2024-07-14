@@ -20,3 +20,4 @@
 
 ### Preview
 [go to Preview](https://drive.google.com/file/d/1b_dxpdOjCJMXGts8uH97dttr2po_nEYP/preview)
+![preview](./assets/preview.png)
