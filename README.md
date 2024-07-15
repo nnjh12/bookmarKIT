@@ -27,4 +27,4 @@ Utilized HTML, JavaScript, React, Node.js, and MongoDB.
 ## Preview
 [Go to preview](https://drive.google.com/file/d/1b_dxpdOjCJMXGts8uH97dttr2po_nEYP/preview)</br>
 </br>
-![preview](./assets/preview.png)
+[![preview](./assets/preview.png)](https://drive.google.com/file/d/1b_dxpdOjCJMXGts8uH97dttr2po_nEYP/preview)
