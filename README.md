@@ -1,6 +1,6 @@
 # bookmarKIT
 Developed an efficient bookmark organization system with tag and search features.</br >
-Utilized ReactJS, Express, NodeJS, and MongoDB.
+Utilized HTML, JavaScript, React, Node.js, and MongoDB.
 
 ## App Architecture[^1]
 ![Architecture](https://images.contentstack.io/v3/assets/blt7151619cb9560896/blt4b651817f6dec60f/666848e371203e8537986b38/mern-stack.png)
